@@ -1,39 +1,4 @@
-#include <mlx.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
-#define SIZE_X 640
-#define SIZE_Y 360
-typedef struct s_image
-{
-	void	*img;
-	void	*addr;
-	int		bits_per_pixel;
-	int		bytes_per_line;
-	int		endian;
-} t_image;
-
-typedef struct s_param
-{
-	void	*win;
-	void	*mlx;
-	t_image	*bufs[2];
-} t_param;
-int	fill_color(t_image *img, int color)
-{
-	uint8_t	*dst;
-	int		i;
-
-	dst = (uint8_t *)img->addr;
-	i = 0;
-	while (i < (SIZE_X * SIZE_Y)) {
-		*(uint32_t *)dst = color;
-		dst += img->bits_per_pixel / 8;
-		i++;
-	}
-	return (0);
-}
+#include "tests.h"
 
 int	alternate_bands(t_image *img, uint32_t color, int bands)
 {
