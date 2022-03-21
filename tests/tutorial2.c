@@ -1,9 +1,4 @@
-#include <mlx.h>
-#include <stddef.h>
-#include <stdio.h>
-#include <stdint.h>
-#include <stdbool.h>
-#include <stdlib.h>
+#include "tests.h"
 
 #define SIZE_X 640
 #define SIZE_Y 360
