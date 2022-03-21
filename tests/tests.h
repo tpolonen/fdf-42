@@ -6,6 +6,8 @@
 # include <stdio.h>
 # include <stdint.h>
 # include <stdbool.h>
+# include <stdlib.h>
+
 # define SIZE_X 640
 # define SIZE_Y 360
 
@@ -25,5 +27,5 @@ typedef struct s_param
 	t_image	*bufs[2];
 } t_param;
 
-int	fill_color(t_image *img, int color);
+//int	fill_color(t_image *img, int color);
 #endif

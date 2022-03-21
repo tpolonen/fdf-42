@@ -1,5 +1,5 @@
 #include "tests.h"
-
+/*
 int	fill_color(t_image *img, int color)
 {
 	uint8_t	*dst;
@@ -14,3 +14,5 @@ int	fill_color(t_image *img, int color)
 	}
 	return (0);
 }
+
+*/

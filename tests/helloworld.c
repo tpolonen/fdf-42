@@ -9,7 +9,6 @@ typedef struct s_param
 	void	*mlx;
 } t_param;
 
-
 static void	(*draw_funcs[MAX_DRAW]) (void *) = { 0 };
 
 int add_draw_func(void (*draw_func) (void *))
@@ -25,13 +24,13 @@ int add_draw_func(void (*draw_func) (void *))
 	return (1);
 }
 
-int update(void *params)
+int update_frame(void *params)
 {
-	printf("update running\n");
+	//printf("update running\n");
 	int i = 0;
 	while (i < MAX_DRAW && draw_funcs[i] != NULL)
 		draw_funcs[i++](params);
-	printf("draw funcs processed\n");
+	//printf("draw funcs processed\n");
 	return (0);
 }
 
@@ -45,7 +44,7 @@ void	draw_hello(void *params)
 	color |= (g << (sizeof(char) * 8));
 	color |= (r << ((sizeof(char) * 8) * 2));
 	mlx_string_put(((t_param *)params)->mlx, ((t_param *)params)->win, 320, 180, color, "Hello world!");
-	printf("color is %d\n", color);
+	//printf("color is %d\n", color);
 }
 
 int main(void)
@@ -55,12 +54,12 @@ int main(void)
 	t_param	params;
 
 	mlx = mlx_init();
-	win = mlx_new_window(mlx, 640, 360, "Hwello uWu");
+	win = mlx_new_window(mlx, 640, 360, "Hello oWorld");
 	params.mlx = mlx;
 	params.win = win;
 	
 	printf("add_draw returned %d\n", add_draw_func(&draw_hello));
-	mlx_expose_hook(win, update, &params);
+	mlx_loop_hook(win, &update_frame, &params);
 	mlx_loop(mlx);
 	return (0);
 }
