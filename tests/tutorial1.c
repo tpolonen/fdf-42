@@ -3,8 +3,11 @@
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
+#include <stdlib.h>
+
 #define SIZE_X 640
 #define SIZE_Y 360
+
 typedef struct s_image
 {
 	void	*img;
@@ -20,6 +23,7 @@ typedef struct s_param
 	void	*mlx;
 	t_image	*bufs[2];
 } t_param;
+
 int	fill_color(t_image *img, int color)
 {
 	uint8_t	*dst;
@@ -35,30 +39,41 @@ int	fill_color(t_image *img, int color)
 	return (0);
 }
 
+int	draw_band(t_image *img, uint32_t color, int y, int height)
+{
+	int		x;
+	uint8_t *dst;
+
+	dst = (uint8_t *)img->addr;
+	while (y < height && y < SIZE_Y) {
+		x = 0;
+		while (x < SIZE_X) {
+			*(uint32_t *)(dst + (y * img->bytes_per_line) + x * (img->bits_per_pixel / 8)) = color;
+			x++;
+		}
+		y++;
+	}
+	return (0);
+}
+
 int	alternate_bands(t_image *img, uint32_t color, int bands)
 {
 	static int	offset;
-	uint8_t 	*dst;
-	int			x;
+	static int	pause;
+	static int	draw;
 	int			y;
 	int			height;
-	int			draw;
 
-	dst = (uint8_t *)img->addr;
 	height = SIZE_Y / bands;
-	y = offset;
-	draw = bands % 2;
+	/*
+	if (draw) {
+		draw_band(img, color, 0, height);
+		y = height;
+	}
+		else*/ y = offset;
 	while (bands > 0) {
 		if (bands % 2 == draw) {
-			int start_y = y;
-			while (y < start_y + height && y < SIZE_Y) {
-				x = 0;
-				while (x < SIZE_X) {
-					*(uint32_t *)(dst + (y * img->bytes_per_line) + x * (img->bits_per_pixel / 8)) = color;
-					x++;
-				}
-				y++;
-			}
+			draw_band(img, color, y, y + height);
 			bands--;
 		} else {
 			int start_y = y;
@@ -66,8 +81,18 @@ int	alternate_bands(t_image *img, uint32_t color, int bands)
 			bands--;
 		}
 	}
-	offset++;
-	if (offset > height) offset = 0;
+	if (pause < 10) pause++;
+	else
+	{
+		pause = 0;
+		offset++;
+		if (offset > height)
+		{
+//			draw = (draw == 0);
+			offset = 0;
+		}
+
+	}
 	return (0);
 }
 
@@ -79,10 +104,19 @@ int	render_frame(void *params)
 
 	p = (t_param *)params;
 	buf = (t_image *)p->bufs[cur_buf];
-	fill_color(buf, 0x00BA42);
-	alternate_bands(buf, 0x0042AACC, 6);
+	fill_color(buf, 0x004242FF);
+	alternate_bands(buf, 0x00FF4242, 6);
 	mlx_put_image_to_window(p->mlx, p->win, buf->img, 0, 0);
 	cur_buf = (cur_buf == 0);
+	return (0);
+}
+
+int check_key(int keycode, void *params)
+{
+	(void) params;
+	printf("%d was pressed\n", keycode);
+	if (keycode == 65307)
+		exit(0);
 	return (0);
 }
 
@@ -107,6 +141,8 @@ int	main(void)
 	params.bufs[1] = &img2;
 	render_frame(&params);
 	mlx_loop_hook(mlx, &render_frame, &params);
+	mlx_key_hook(win, &check_key, &params);
 	mlx_loop(mlx);
+
 	return (0);
 }
