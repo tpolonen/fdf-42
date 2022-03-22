@@ -1,4 +1,5 @@
 #include "tests.h"
+#include <strings.h>
 #include <math.h>
 
 typedef struct s_point {
@@ -6,9 +7,10 @@ typedef struct s_point {
 	int y;
 } t_point;
 
-static t_point p1;
-static t_point p2;
+static t_point2 p1;
+static t_point2 p2;
 
+/*
 void dda_draw_line(t_image *img, t_point *p1, t_point *p2, uint32_t color)
 {
 	uint8_t *dst;
@@ -26,20 +28,21 @@ void dda_draw_line(t_image *img, t_point *p1, t_point *p2, uint32_t color)
 	//draw pixel for each step
 	double x = p1->x;
 	double y = p1->y;
-/*
+
 	printf("do we have dst? %p\n", dst);
 	printf("what's there? %d\n", *dst);
 	printf("trying y: %zu\n", (size_t)(dst + (int)round(y) * img->bytes_per_line));
 	printf("trying x: %zu\n", (size_t)((int)round(x) * (img->bits_per_pixel / 8)));
-*/	
-	*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + (int)x * (img->bits_per_pixel / 8)) = color;
+
+	*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
 	for (int i = 1; i <= step; ++i)
 	{
 		x += x_increment;
 		y += y_increment;
-		*(uint32_t *)(dst + ((int)round(y) * img->bytes_per_line) + (int)(round(x) * (img->bits_per_pixel / 8))) = color;
+		*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
 	}
 }
+*/
 
 uint32_t rgb_to_uint(unsigned char r, unsigned char g, unsigned char b)
 {
@@ -77,6 +80,7 @@ int	render_frame(void *params)
 		if (p1.y < 0 || p2.y > SIZE_Y)
 			go_up = 0;
 	}
+	bzero(buf->addr, (buf->bytes_per_line * SIZE_Y));
 	dda_draw_line(buf, &p1, &p2, color);
 	mlx_put_image_to_window(p->mlx, p->win, buf->img, 0, 0);
 	cur_buf = (cur_buf == 0);
@@ -94,11 +98,13 @@ int main(void){
 	win = mlx_new_window(mlx, SIZE_X, SIZE_Y, "linedraw");
 	img1.img = mlx_new_image(mlx, SIZE_X, SIZE_Y);
 	img1.addr = mlx_get_data_addr(img1.img, &img1.bits_per_pixel, &img1.bytes_per_line, &img1.endian);
+	img1.bytes_per_pixel = img1.bits_per_pixel / 8;
 	img2.img = mlx_new_image(mlx, SIZE_X, SIZE_Y);
 	img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.bytes_per_line, &img2.endian);
+	img2.bytes_per_pixel = img2.bits_per_pixel / 8;
 	printf("img1 addr: %p\n", img1.addr);
 	printf("img2 addr: %p\n", img2.addr);
-	printf("bits per pixel: %d, line length: %d, endian: %d\n", img1.bits_per_pixel, img1.bytes_per_line, img1.endian);
+	printf("bits per pixel: %d, bytes_per_pixel: %d, line length: %d, endian: %d\n", img1.bits_per_pixel, img1.bytes_per_pixel, img1.bytes_per_line, img1.endian);
 	params.mlx = mlx;
 	params.win = win;
 	params.bufs[0] = &img1;
