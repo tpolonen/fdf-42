@@ -1,54 +1,49 @@
 #include "tests.h"
-#include <strings.h>
-#include <math.h>
 
-static t_point2 p1;
-static t_point2 p2;
+static uint32_t line_color;
+static uint32_t bg_color;
+
+int *read_input(int ac, char **av)
+{
+	(void) ac;
+	(void) av;
+
+	int nodes = 10;
+	int	*map = calloc(1, sizeof(int) * nodes);
+
+	return (map);
+}
 
 int	render_frame(void *params)
 {
 	static int	cur_buf;
-	static int	go_up;
 	t_param		*p;
 	t_image		*buf;
-	static unsigned char r, g, b;
-
-	r += 2;
-	g += 4;
-	b += 8;
-	uint32_t color = rgb_to_uint(r, g ,b);
 	p = (t_param *)params;
+	// open back buffer
 	buf = (t_image *)p->bufs[cur_buf];
-	if (!go_up)
-	{
-		p1.y++;
-		p2.y--;
-		if (p1.y > SIZE_Y || p2.y < 0)
-			go_up = 1;
-	}
-	else
-	{
-		p1.y--;
-		p2.y++;
-		if (p1.y < 0 || p2.y > SIZE_Y)
-			go_up = 0;
-	}
+	// clear back buffer
 	bzero(buf->addr, (buf->bytes_per_line * SIZE_Y));
-	dda_draw_line(buf, &p1, &p2, color);
+	// do draw stuff
+	0;
+	// put curr. back buffer to window and flip buffers
 	mlx_put_image_to_window(p->mlx, p->win, buf->img, 0, 0);
 	cur_buf = (cur_buf == 0);
 	return (0);
 }
 
-int main(void){
+int main(int ac, char **av)
+{
 	void	*mlx;
 	void	*win;
+	int		*map;
 	t_param	params;
 	t_image	img1;
 	t_image img2;
 
+	map = read_input(ac, av);
 	mlx = mlx_init();
-	win = mlx_new_window(mlx, SIZE_X, SIZE_Y, "linedraw");
+	win = mlx_new_window(mlx, SIZE_X, SIZE_Y, "2dcoord");
 	img1.img = mlx_new_image(mlx, SIZE_X, SIZE_Y);
 	img1.addr = mlx_get_data_addr(img1.img, &img1.bits_per_pixel, &img1.bytes_per_line, &img1.endian);
 	img1.bytes_per_pixel = img1.bits_per_pixel / 8;
@@ -62,12 +57,9 @@ int main(void){
 	params.win = win;
 	params.bufs[0] = &img1;
 	params.bufs[1] = &img2;
-	p1.x = 0;
-	p1.y = 0;
-	p2.x = SIZE_X;
-	p2.y = SIZE_Y;
 	render_frame(&params);
 	mlx_loop_hook(mlx, &render_frame, &params);
+	mlx_key_hook(mlx, &read_key, &params);
 	mlx_loop(mlx);
 	return(0);
 }

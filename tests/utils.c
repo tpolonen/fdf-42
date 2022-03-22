@@ -1,5 +1,13 @@
 #include "tests.h"
 
+uint32_t rgb_to_uint(unsigned char r, unsigned char g, unsigned char b)
+{
+	uint32_t color = (uint32_t)b;
+	color |= (g << (sizeof(char) * 8));
+	color |= (r << ((sizeof(char) * 8) * 2));
+	return color;
+}
+
 void dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
 {
 	uint8_t *dst;
