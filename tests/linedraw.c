@@ -33,7 +33,7 @@ int	render_frame(void *params)
 		if (p1.y < 0 || p2.y > SIZE_Y)
 			go_up = 0;
 	}
-	bzero(buf->addr, (buf->bytes_per_line * SIZE_Y));
+//	bzero(buf->addr, (buf->bytes_per_line * SIZE_Y));
 	dda_draw_line(buf, &p1, &p2, color);
 	mlx_put_image_to_window(p->mlx, p->win, buf->img, 0, 0);
 	cur_buf = (cur_buf == 0);
