@@ -17,14 +17,21 @@ static uint32_t bg_color = 0x00000000;
 
 void read_file(char* filename, t_param2 *params)
 {
+	FILE *file;
+
 	printf("filename was %s\n", filename);
+	
+	file = fopen(filename, "r");
+	if (file == NULL) {
+		perror("File reading failed");
+		exit(6);
+	}
 	params->map = NULL;
 	params->nodecount = 0;
 }
 
 void read_array(int ac, char **av, t_param2 *params)
 {
-	printf("got an array of numbers apparently, probably should check it out\n");
 	params->map = calloc(1, sizeof(int) * (ac - 1));
 	if (params->map == NULL) {
 		printf("Map allocation failed");
@@ -49,7 +56,7 @@ void handle_flag(char flag, int ac, char **av, t_param2 *params)
 		}
 	} else if (flag == 'n') {
 		if (ac > 2) {
-		printf("got number flag\n"); //map = read_array(ac, av);
+		printf("got number flag\n");
 		read_array(ac, av, params);
 		}
 		else {
