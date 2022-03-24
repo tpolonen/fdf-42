@@ -15,14 +15,45 @@ typedef struct s_param2
 static uint32_t line_color = 0x0042FF42;
 static uint32_t bg_color = 0x00000000;
 
+int *read_file(char* filename)
+{
+	int *map;
+
+	return map;
+}
+
+int *read_array(int ac, char **av)
+{
+	int *map;
+
+	return map;
+}
+
+int *handle_flag(char flag, int ac, char **av)
+{
+	int *map;
+	
+	if (flag == 'f') map = read_file(*av[1]);
+	else if (flag == 'n') map = read_array(ac, av);
+	else {
+		printf("Invalid flag: %c\ŋ", flag);
+		exit(2);
+	}
+	return map;
+}
+
 int *read_input(int ac, char **av)
 {
-	(void) ac;
-	(void) av;
-	int nodecount = 10;
-	int nodes = nodecount;
-	int	*map = calloc(1, sizeof(int) * nodes);
+	int *map;
 
+	if (strlen(*av[0]) > 2)
+		if (strncmp(*av[0], "--") == 0);
+			map = handle_flag(*av[0][2], ac, **av);
+	else if (ac == 1) map = read_file(*av[0]);
+	else {
+		printf("Invalid parameters: expected flag or one parameter, got %d\n", ac);
+		exit(1);
+	}
 	return (map);
 }
 
@@ -37,6 +68,8 @@ void draw_map(t_image *cur_buf, t_param2 *params)
 //		printf("currently doing map index %d, containing %d\n", i, params->map[i]);
 		cur_point.x = (int)round(gap) * i;
 		cur_point.y = (SIZE_Y / 2) + (params->map[i] * params->magnitude);
+		if (cur_point.x > SIZE_X) cur_point.x = SIZE_X;
+		if (cur_point.y > SIZE_Y) cur_point.y = SIZE_Y;
 		if (i > 0)
 			dda_draw_line(cur_buf, &last_point, &cur_point, line_color);
 		last_point.x = cur_point.x;
@@ -83,7 +116,7 @@ int main(int ac, char **av)
 	params.draw_matrix = &matrix;
 	params.map = map;
 	params.nodecount = nodecount;
-	params.magnitude = 25;
+	params.magnitude = 50;
 
 	// later
 	// map = read_input(ac, av);
