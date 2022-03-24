@@ -17,12 +17,14 @@ static uint32_t bg_color = 0x00000000;
 
 void read_file(char* filename, t_param2 *params)
 {
-	FILE *file;
-
-	printf("filename was %s\n", filename);
+	int		fd;
+	int		rows = 0;
+	int		cols = 0;
+	char 	*line;
 	
-	file = fopen(filename, "r");
-	if (file == NULL) {
+	printf("filename was %s\n", filename);
+	fd = open(filename, O_WRONLY);
+	if (fd == -1) {
 		perror("File reading failed");
 		exit(6);
 	}
@@ -37,7 +39,7 @@ void read_array(int ac, char **av, t_param2 *params)
 		printf("Map allocation failed");
 		exit(4);
 	}
-	for (int i = 1; i < ac; i++) {
+	for (int i = 2; i < ac; i++) {
 		params->map[i-1] = atoi(av[i]);
 		printf("%d\n", params->map[i-1]);
 	}
@@ -89,19 +91,21 @@ void read_input(int ac, char **av, t_param2 *params)
 
 void draw_map(t_image *cur_buf, t_param2 *params)
 {
-	double		gap = SIZE_X / (params->nodecount - 1);
+	double		gap = SIZE_X / (params->nodecount - 2);
 	t_point2	last_point;
 	t_point2	cur_point;
 	
-	for (int i = 0; i < params->nodecount; i++)
+	for (int i = 1; i < params->nodecount; i++)
 	{
 //		printf("currently doing map index %d, containing %d\n", i, params->map[i]);
-		cur_point.x = (int)round(gap) * i;
+		cur_point.x = (int)round(gap) * (i - 1);
 		cur_point.y = (SIZE_Y / 2) + (params->map[i] * params->magnitude);
 		if (cur_point.x > SIZE_X) cur_point.x = SIZE_X;
 		if (cur_point.y > SIZE_Y) cur_point.y = SIZE_Y;
-		if (i > 0)
+		if (i > 1) {
 			dda_draw_line(cur_buf, &last_point, &cur_point, line_color);
+			printf("drew line from x:%d y:%d to x:%d y:%d\n", last_point.x, last_point.y, cur_point.x, cur_point.y);
+		}
 		last_point.x = cur_point.x;
 		last_point.y = cur_point.y;
 	}

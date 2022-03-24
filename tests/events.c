@@ -29,8 +29,8 @@ int set_key(int keycode, void (*func)(t_param *params))
 	seek = seek_key(keycode);
 	if (seek == NULL) {
 		//create new keybind (at the top of linked list?)
-		t_list *new = lstnew((void *)key, sizeof(t_keybind));
-		lstadd(keys_head, new);
+		t_list *new = ft_lstnew((void *)key, sizeof(t_keybind));
+		ft_lstadd(keys_head, new);
 	} else {
 		//overwrite existing keybind
 		free(seek->content);

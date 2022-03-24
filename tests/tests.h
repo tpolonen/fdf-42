@@ -9,6 +9,9 @@
 # include <stdlib.h>
 # include <string.h>
 # include <math.h>
+# include "fcntl.h"
+# include "libft.h"
+# include "get_next_line.h"
 
 # define SIZE_X 1280
 # define SIZE_Y 720
@@ -29,13 +32,6 @@ typedef struct s_param
 	void	*mlx;
 	t_image	*bufs[2];
 } t_param;
-
-typedef struct s_list
-{
-	void	*content;
-	int		size;
-	struct s_list	*next;
-} t_list;
 
 typedef struct s_keybind
 {
