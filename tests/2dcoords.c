@@ -15,46 +15,69 @@ typedef struct s_param2
 static uint32_t line_color = 0x0042FF42;
 static uint32_t bg_color = 0x00000000;
 
-int *read_file(char* filename)
+void read_file(char* filename, t_param2 *params)
 {
-	int *map;
-
-	return map;
+	printf("filename was %s\n", filename);
+	params->map = NULL;
+	params->nodecount = 0;
 }
 
-int *read_array(int ac, char **av)
+void read_array(int ac, char **av, t_param2 *params)
 {
-	int *map;
-
-	return map;
+	printf("got an array of numbers apparently, probably should check it out\n");
+	params->map = calloc(1, sizeof(int) * (ac - 1));
+	if (params->map == NULL) {
+		printf("Map allocation failed");
+		exit(4);
+	}
+	for (int i = 1; i < ac; i++) {
+		params->map[i-1] = atoi(av[i]);
+		printf("%d\n", params->map[i-1]);
+	}
+	params->nodecount = ac-1;
 }
 
-int *handle_flag(char flag, int ac, char **av)
+void handle_flag(char flag, int ac, char **av, t_param2 *params)
 {
-	int *map;
-	
-	if (flag == 'f') map = read_file(*av[1]);
-	else if (flag == 'n') map = read_array(ac, av);
-	else {
-		printf("Invalid flag: %c\ŋ", flag);
+	if (flag == 'f') {
+		if (ac > 2) {
+			printf("got file read flag\n");
+			read_file(av[1], params);
+		} else {
+			printf("File read flag was specified but no filename was provided\n");
+			exit(2);
+		}
+	} else if (flag == 'n') {
+		if (ac > 2) {
+		printf("got number flag\n"); //map = read_array(ac, av);
+		read_array(ac, av, params);
+		}
+		else {
+		printf("Number flag: Provide y-coordinates by passing them as parameters after the flag\n");
+		exit(2);
+		}
+	} else {
+		printf("Invalid flag: %c\n", flag);
 		exit(2);
 	}
-	return map;
 }
 
-int *read_input(int ac, char **av)
+void read_input(int ac, char **av, t_param2 *params)
 {
-	int *map;
-
-	if (strlen(*av[0]) > 2)
-		if (strncmp(*av[0], "--") == 0);
-			map = handle_flag(*av[0][2], ac, **av);
-	else if (ac == 1) map = read_file(*av[0]);
-	else {
-		printf("Invalid parameters: expected flag or one parameter, got %d\n", ac);
+	if (ac > 1 && av[1][0] == '-') {
+		if (strncmp(av[1], "--", 2) == 0) {
+			handle_flag(av[1][2], ac, av, params);
+		}
+		else if (av[1][0] == '-') {
+		   printf("Invalid flag or filename - use '--' for flags\n");
+		   exit(3);
+		}	   
+	} else if (ac == 2) {
+		read_file(av[1], params);
+	} else {
+		printf("Invalid parameters: expected flag or map filename, got %d arguments\n", ac - 1);
 		exit(1);
 	}
-	return (map);
 }
 
 void draw_map(t_image *cur_buf, t_param2 *params)
@@ -80,15 +103,16 @@ void draw_map(t_image *cur_buf, t_param2 *params)
 int	render_frame(void *params)
 {
 	static int	cur_buf;
-	t_param		*p;
 	t_image		*buf;
-	p = (t_param *)params;
+	t_param2	*p;
+
+	p = (t_param2 *) params;
 	// open back buffer
 	buf = (t_image *)p->bufs[cur_buf];
 	// clear back buffer
 	bzero(buf->addr, (buf->bytes_per_line * SIZE_Y));
 	// do draw stuff
-	draw_map(buf, params);
+	draw_map(buf, p);
 	// put curr. back buffer to window and flip buffers
 	mlx_put_image_to_window(p->mlx, p->win, buf->img, 0, 0);
 	cur_buf = (cur_buf == 0);
@@ -99,8 +123,6 @@ int main(int ac, char **av)
 {
 	void		*mlx;
 	void		*win;
-	int			map[10] = { 0, 0, 0, 8, 4, 2, 5, 5, 5, 0 };
-	int			nodecount = 10;
 	t_matrix2	matrix;
 
 	//assign matrix values individually because of course
@@ -114,12 +136,12 @@ int main(int ac, char **av)
 	t_image 	img2;
 
 	params.draw_matrix = &matrix;
-	params.map = map;
-	params.nodecount = nodecount;
 	params.magnitude = 50;
 
-	// later
-	// map = read_input(ac, av);
+	// now
+	// read_input needs to set map and nodecount
+	// gotta love side-effects
+	read_input(ac, av, &params);
 
 	(void) ac;
 	(void) av;
@@ -141,7 +163,7 @@ int main(int ac, char **av)
 	params.bufs[1] = &img2;
 	render_frame(&params);
 //	mlx_loop_hook(mlx, &render_frame, &params);
-	mlx_key_hook(mlx, &read_key, &params);
+//	mlx_key_hook(mlx, &read_key, &params);
 	mlx_loop(mlx);
 	return(0);
 }
