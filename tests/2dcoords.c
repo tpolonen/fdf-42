@@ -1,4 +1,5 @@
 #include "tests.h"
+#include <ctype.h>
 
 typedef struct s_param2
 {
@@ -23,10 +24,20 @@ void read_file(char* filename, t_param2 *params)
 	char 	*line;
 	
 	printf("filename was %s\n", filename);
-	fd = open(filename, O_WRONLY);
+	fd = open(filename, O_RDONLY);
 	if (fd == -1) {
 		perror("File reading failed");
 		exit(6);
+	}
+	ft_getline(fd, &line);
+	perror("Here's what happened with getline");
+	printf("%s\n", line);
+	char *endptr = line;
+	printf("reading vals from file\n");
+	while (*endptr != '\0') {
+		long val = strtol(line, &endptr, 10);
+		line = endptr;
+		printf("%p: %ld\n", endptr, val);
 	}
 	params->map = NULL;
 	params->nodecount = 0;
