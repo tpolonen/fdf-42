@@ -6,13 +6,13 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/04 17:19:24 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/03/24 12:57:43 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/05 17:01:55 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef GET_NEXT_LINE_H
 # define GET_NEXT_LINE_H
-# define BUFF_SIZE 32
+# define BUFF_SIZE 1024
 
 # include "libft.h"
 

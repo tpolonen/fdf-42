@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/05 12:09:49 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/05 17:00:25 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,15 +27,20 @@ typedef struct s_image
 	int		endian;
 } t_image;
 
+typedef struct s_map
+{
+	int	*vals;
+	int	rows;
+	int cols;
+} t_map;
+
 typedef struct s_param
 {
-	void	*win;
 	void	*mlx;
+	void	*win;
 	t_image	*bufs[2];
-	int		*coords;
+	t_map	map;
 	int		magnitude;
-	int		*map;
-	int		nodecount;
 } t_param;
 
 typedef struct s_point2
