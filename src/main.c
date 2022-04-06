@@ -6,15 +6,20 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:48:29 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/05 12:14:30 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:27:00 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-static uint32_t line_color = 0x0042FF42;
-static uint32_t bg_color = 0x00000000;
+// static uint32_t line_color = 0x0042FF42;
+// static uint32_t bg_color = 0x00000000;
+
+static void render_frame(t_param *params)
+{
+	(void) params;
+}
 
 void read_input(int ac, char **av, t_param *params)
 {

@@ -6,11 +6,17 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/05 17:00:25 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:24:20 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
+#ifndef FDF_H
+# define FDF_H
+
 # include <mlx.h>
+# include <math.h>
+# include <fcntl.h>
+# include <stdio.h>
 # include "libft.h"
 # include "get_next_line.h"
 
@@ -61,4 +67,6 @@ void		dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color);
 uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b);
 
 // Reading and processing file
-void 		read_file(char* filename, t_param2 *params);
+void 		read_file(char* filename, t_param *params);
+
+#endif

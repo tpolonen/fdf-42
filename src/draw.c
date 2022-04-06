@@ -6,9 +6,11 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/05 12:13:29 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/06 14:20:20 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
+#include "fdf.h"
 
 uint32_t rgb_to_uint(unsigned char r, unsigned char g, unsigned char b)
 {
