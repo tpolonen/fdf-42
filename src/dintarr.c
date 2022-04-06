@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:20:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 15:04:05 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/06 17:36:03 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,8 @@ ssize_t dintarr_add(t_dintarr **darr, const int n)
 		(*darr)->arr = n_arr;
 		(*darr)->alloced = n_size;
 	}
-	ft_memcpy((void *)(*darr)->arr + ((*darr)->len * sizeof(int)), (void *)&n, sizeof(int));
+	ft_memcpy((void *)(*darr)->arr + ((*darr)->len * sizeof(int)),
+			(void *)&n, sizeof(int));
 	(*darr)->len++;
 	return ((size_t)(*darr)->len);
 }

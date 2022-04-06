@@ -1,20 +1,20 @@
-/* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/04/05 11:48:29 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 14:27:00 by tpolonen         ###   ########.fr       */
-/*                                                                            */
-/* ************************************************************************** */
+	/* ************************************************************************** */
+	/*                                                                            */
+	/*                                                        :::      ::::::::   */
+	/*   main.c                                             :+:      :+:    :+:   */
+	/*                                                    +:+ +:+         +:+     */
+	/*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
+	/*                                                +#+#+#+#+#+   +#+           */
+	/*   Created: 2022/04/05 11:48:29 by tpolonen          #+#    #+#             */
+/*   Updated: 2022/04/06 18:13:58 by tpolonen         ###   ########.fr       */
+	/*                                                                            */
+	/* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
 
-// static uint32_t line_color = 0x0042FF42;
-// static uint32_t bg_color = 0x00000000;
+	// static uint32_t line_color = 0x0042FF42;
+	// static uint32_t bg_color = 0x00000000;
 
 static void render_frame(t_param *params)
 {
@@ -23,11 +23,13 @@ static void render_frame(t_param *params)
 
 void read_input(int ac, char **av, t_param *params)
 {
-	if (ac == 2) {
+	if (ac == 2) 
+	{
 		read_file(av[1], params);
-	} else {
-		printf("Invalid parameters: expected map filename, got %d arguments\n", ac - 1);
-		exit(1);
+	} 
+	else {
+	printf("Invalid parameters: expected map filename, got %d arguments\n", ac - 1);
+	exit(2);
 	}
 }
 
@@ -57,6 +59,6 @@ int main(int ac, char **av)
 	params.bufs[1] = &img2;
 	params.magnitude = 50;
 	render_frame(&params);
-	mlx_loop(mlx);
+	//mlx_loop(mlx);
 	return(0);
 }

@@ -6,12 +6,12 @@
 #    By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/12 19:01:12 by tpolonen          #+#    #+#              #
-#    Updated: 2022/04/05 11:35:05 by tpolonen         ###   ########.fr        #
+#    Updated: 2022/04/06 18:19:12 by tpolonen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 CC = gcc
-CFLAGS = -c -Wall -Wextra -Werror -I$(HEADER_DIR)
+CFLAGS = -c -g -Wall -Wextra -Werror -I$(HEADER_DIR)
 ARFLAGS = rcs
 
 HEADER_DIR = ./include/

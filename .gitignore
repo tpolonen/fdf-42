@@ -1,4 +1,5 @@
 .*
+*dsym
 !./gitignore
 *.o
 *.a

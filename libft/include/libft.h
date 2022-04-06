@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/12/13 14:07:36 by tpolonen          #+#    #+#             */
-/*   Updated: 2021/12/27 16:30:11 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/06 11:30:44 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ char	*ft_strchr(const char *s, int c);
 char	*ft_strrchr(const char *s, int c);
 char	*ft_strchrnul(const char *s, int c);
 char	*ft_strstr(const char *haystack, const char *needle);
+long	ft_strtol(const char *nptr, char **endptr);
 char	*ft_strnstr(const char *haystack, const char *needle, size_t len);
 int		ft_strcmp(const char *s1, const char *s2);
 int		ft_strncmp(const char *s1, const char *s2, size_t n);

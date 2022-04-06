@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 14:24:20 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/06 18:06:20 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,8 @@ typedef struct s_param
 	void	*mlx;
 	void	*win;
 	t_image	*bufs[2];
-	t_map	map;
+	int		**map;
+	int		*cols;
 	int		magnitude;
 } t_param;
 
