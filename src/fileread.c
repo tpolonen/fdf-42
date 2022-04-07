@@ -6,12 +6,17 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 08:25:23 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 10:42:22 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "dintarr.h"
+
+static int	isskippable(char c)
+{
+	return (c != '\0' && c != '\n' && c != '-' && c != '+' && !ft_isdigit(c));
+}
 
 static void	print_intarr(int *arr, int len)
 {
@@ -38,21 +43,45 @@ static int	**read_cols(char *nptr, int *col_arr, int rows)
 	i = 0;
 	darr = NULL;
 	endptr = nptr;
+	ft_putstr("starting from ");
+	ft_putchar(*nptr);
+	ft_putendl("");
 	while(i < rows)
 	{
 		cols = 0;
-		while (*endptr != '\0')
+		while (*endptr != '\n' && *endptr != '\0' && cols<500)
 		{
-			dintarr_add(&darr, ft_strtol(nptr, &endptr));
-			cols++;
-			if (*endptr == '\0' || *endptr == '\n')
+			ft_putstr("should be ");
+			ft_putnbr((int)ft_strtol(nptr, NULL));
+			ft_putstr(" accually is ");
+			dintarr_add(&darr, (int)ft_strtol(nptr, &endptr));
+			ft_putstr("[");
+			ft_putnbr(cols);
+			ft_putstr("]");
+			ft_putnbr(darr->arr[cols]);
+			ft_putstr("\n");
+			while(isskippable(*endptr)) endptr++;
+			if (*endptr == '\n' || *endptr == '\0')
 			{
-				*map[i] = dintarr_close(&darr, &(map[i]));
-				col_arr[i] = cols;
+				dintarr_close(&darr, &(map[i]));
+				col_arr[i] = ++cols;
+				ft_putstr("map[");
+				ft_putnbr(i);
+				ft_putendl("] contents:");
+				print_intarr(map[i], col_arr[i]);
 			}
-			nptr = endptr;
+			else
+			{
+				cols++;
+				nptr = endptr;
+			}
 		}
 		i++;
+		nptr = ++endptr;
+		ft_putnbr(i);
+		ft_putstr("/");
+		ft_putnbr(rows);
+		ft_putendl(" rows done");
 	}
 	return (map);
 }
@@ -68,7 +97,12 @@ static int	read_rows(int fd, t_dstr **data)
 	{
 		len = ft_getline(fd, &buf);
 		if (len <= 0)
+		{
+			ft_putstr("got this many rows: ");
+			ft_putnbr(rows);
+			ft_putendl("");
 			return (rows);
+		}
 		ft_putendl("buf:");
 		ft_putendl(buf);
 		ft_dstrbuild(data, buf, len);
@@ -95,12 +129,12 @@ void		read_file(char* filename, t_param *params)
 		exit(1);
 	}
 	rows = 0;
-	cols = NULL;
 	data = NULL;
 	rows = read_rows(fd, &data);
 	ft_putendl("this is data:");
 	ft_putendl(data->str);
 	ft_putendl("");
+	cols = (int *)ft_memalloc(sizeof(int) * rows);
 	map = read_cols(data->str, cols, rows);
 	ft_putendl("contents of col array:");
 	print_intarr(cols, rows);

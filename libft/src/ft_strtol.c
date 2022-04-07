@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:19:38 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 11:35:21 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 10:15:23 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,10 +35,9 @@ long	ft_strtol(const char *nptr, char **endptr)
 		nptr++;
 	}
 	while (ft_isdigit(*nptr))
-	{
 		n = (10 * n) + ((long) sign * (*nptr++ - '0'));
+	if (endptr != NULL)
 		if (*endptr != NULL)
 			*endptr = (char *)nptr;
-	}
 	return (n);
 }
