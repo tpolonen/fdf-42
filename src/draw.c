@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 13:10:50 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:09:01 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,13 +41,11 @@ void	dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
 	y_increment = dy / (double)step;
 	x = p1->x;
 	y = p1->y;
-	*(uint32_t *)(dst + ((int)y * img->bytes_per_line)
-			+ ((int)x * img->bytes_per_pixel)) = color;
+	*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
 	for (int i = 1; i <= step; ++i)
 	{
 		x += x_increment;
 		y += y_increment;
-		*(uint32_t *)(dst + ((int)y * img->bytes_per_line
-					+ ((int)x * img->bytes_per_pixel)) = color;
+		*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
 	}
 }

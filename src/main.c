@@ -1,14 +1,14 @@
-	/* ************************************************************************** */
-	/*                                                                            */
-	/*                                                        :::      ::::::::   */
-	/*   main.c                                             :+:      :+:    :+:   */
-	/*                                                    +:+ +:+         +:+     */
-	/*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
-	/*                                                +#+#+#+#+#+   +#+           */
-	/*   Created: 2022/04/05 11:48:29 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 18:13:58 by tpolonen         ###   ########.fr       */
-	/*                                                                            */
-	/* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/04/07 15:13:12 by tpolonen          #+#    #+#             */
+/*   Updated: 2022/04/07 15:57:40 by tpolonen         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
 
 #include "fdf.h"
 #include <stdio.h>
@@ -41,18 +41,18 @@ int main(int ac, char **av)
 	t_image		img1;
 	t_image 	img2;
 
-	// now
-	// read_input needs to set map and nodecount
+	// read_input needs to set params->map and buncha other stuff
 	// gotta love side-effects
 	read_input(ac, av, &params);
 	mlx = mlx_init();
-	win = mlx_new_window(mlx, SIZE_X, SIZE_Y, "fdf");
+	// probably should get rid of the repetition here
 	img1.img = mlx_new_image(mlx, SIZE_X, SIZE_Y);
 	img1.addr = mlx_get_data_addr(img1.img, &img1.bits_per_pixel, &img1.bytes_per_line, &img1.endian);
 	img1.bytes_per_pixel = img1.bits_per_pixel / 8;
 	img2.img = mlx_new_image(mlx, SIZE_X, SIZE_Y);
 	img2.addr = mlx_get_data_addr(img2.img, &img2.bits_per_pixel, &img2.bytes_per_line, &img2.endian);
 	img2.bytes_per_pixel = img2.bits_per_pixel / 8;
+	win = mlx_new_window(mlx, SIZE_X, SIZE_Y, "fdf");
 	params.mlx = mlx;
 	params.win = win;
 	params.bufs[0] = &img1;

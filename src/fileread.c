@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 12:51:13 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 15:53:23 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ void		read_file(char* filename, t_param *params)
 	rows = read_rows(fd, &data);
 	cols = (int *)ft_memalloc(sizeof(int) * rows);
 	map = read_cols(data->str, cols, rows);
+	ft_dstrclose(&data, NULL);
 	ft_putendl("contents of col array:");
 	print_intarr(cols, rows);
 	ft_putendl("contents of map arr:");
