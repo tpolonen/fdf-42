@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 12:19:01 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 12:51:13 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,11 +22,12 @@ static void	print_intarr(int *arr, int len)
 {
 	int	i;
 	
-	i = -1;
-	while(i++ < len)
+	i = 0;
+	while(i < len)
 	{
 		ft_putnbr(arr[i]);
 		ft_putstr(" ");
+		i++;
 	}
 	ft_putendl("");
 }
@@ -34,7 +35,6 @@ static void	print_intarr(int *arr, int len)
 static int	**read_cols(char *nptr, int *col_arr, int rows)
 {
 	t_dintarr	*darr;
-	char		*endptr;
 	int			**map;
 	int			i;
 	int			cols;
@@ -42,23 +42,20 @@ static int	**read_cols(char *nptr, int *col_arr, int rows)
 	map = (int **)ft_memalloc(sizeof(int *) * rows);
 	i = 0;
 	darr = NULL;
-	endptr = nptr;
 	while(i < rows)
 	{
 		cols = 0;
-		while (*endptr != '\n' && *endptr != '\0' && cols<500)
+		while (*nptr != '\n' && *nptr != '\0')
 		{
-			dintarr_add(&darr, (int)ft_strtol(nptr, &endptr));
+			dintarr_add(&darr, (int)ft_strtol(nptr, &nptr));
 			cols++;
-			while(isskippable(*endptr)) endptr++;
-			if (*endptr == '\n' || *endptr == '\0')
+			while(isskippable(*nptr)) nptr++;
+			if (*nptr == '\n' || *nptr == '\0')
 				dintarr_close(&darr, &(map[i]));
-			else
-				nptr = endptr;
 		}
 		col_arr[i] = cols;
 		i++;
-		nptr = ++endptr;
+		nptr++;;
 	}
 	return (map);
 }
@@ -75,6 +72,8 @@ static int	read_rows(int fd, t_dstr **data)
 		len = ft_getline(fd, &buf);
 		if (len <= 0)
 			return (rows);
+		ft_dstrbuild(data, buf, len);
+		ft_dstrbuild(data, "\n", 1);
 		rows++;
 	}
 }

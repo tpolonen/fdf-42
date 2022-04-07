@@ -6,14 +6,14 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:20:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 17:36:03 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 13:06:31 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dintarr.h"
 #define DEFAULT_SIZE 3 
 
-int		dintarr_create(t_dintarr **darr, ssize_t size)
+int	dintarr_create(t_dintarr **darr, ssize_t size)
 {
 	*darr = (t_dintarr *) ft_memalloc(sizeof(t_dintarr));
 	if (!(*darr))
@@ -28,7 +28,7 @@ int		dintarr_create(t_dintarr **darr, ssize_t size)
 	return (1);
 }
 
-ssize_t dintarr_add(t_dintarr **darr, const int n)
+ssize_t	dintarr_add(t_dintarr **darr, const int n)
 {
 	int		*n_arr;
 	size_t	n_size;
@@ -44,14 +44,14 @@ ssize_t dintarr_add(t_dintarr **darr, const int n)
 		n_arr = (int *) ft_memalloc(n_size);
 		if (!n_arr)
 			return (-1);
-		ft_memcpy((void *)n_arr, (void *)(*darr)->arr, 
-				(((*darr)->len) * sizeof(int)));
+		ft_memcpy((void *)n_arr, (void *)(*darr)->arr,
+			(((*darr)->len) * sizeof(int)));
 		free((*darr)->arr);
 		(*darr)->arr = n_arr;
 		(*darr)->alloced = n_size;
 	}
 	ft_memcpy((void *)(*darr)->arr + ((*darr)->len * sizeof(int)),
-			(void *)&n, sizeof(int));
+		(void *)&n, sizeof(int));
 	(*darr)->len++;
 	return ((size_t)(*darr)->len);
 }

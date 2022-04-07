@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 18:06:20 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 13:05:01 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,14 +31,7 @@ typedef struct s_image
 	int		bytes_per_pixel;
 	int		bytes_per_line;
 	int		endian;
-} t_image;
-
-typedef struct s_map
-{
-	int	*vals;
-	int	rows;
-	int cols;
-} t_map;
+}	t_image;
 
 typedef struct s_param
 {
@@ -48,26 +41,26 @@ typedef struct s_param
 	int		**map;
 	int		*cols;
 	int		magnitude;
-} t_param;
+}	t_param;
 
 typedef struct s_point2
 {
 	int	x;
 	int	y;
-} t_point2;
+}	t_point2;
 
 typedef struct s_point3
 {
-	int x;
-	int y;
-	int z;
-} t_point3;
+	int	x;
+	int	y;
+	int	z;
+}	t_point3;
 
 // Drawing related
-void		dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color);
+void		dda_draw_line(t_image *i, t_point2 *p1, t_point2 *p2, uint32_t c);
 uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b);
 
 // Reading and processing file
-void 		read_file(char* filename, t_param *params);
+void		read_file(char *filename, t_param *params);
 
 #endif
