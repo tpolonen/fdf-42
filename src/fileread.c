@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 18:38:27 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 08:25:23 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,7 @@ static int	**read_cols(char *nptr, int *col_arr, int rows)
 				*map[i] = dintarr_close(&darr, &(map[i]));
 				col_arr[i] = cols;
 			}
-			nptr = endptr + sizeof(int);
+			nptr = endptr;
 		}
 		i++;
 	}
