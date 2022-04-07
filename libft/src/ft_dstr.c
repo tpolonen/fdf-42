@@ -40,7 +40,7 @@ ssize_t	ft_dstrbuild(t_dstr **ds, const char *str, size_t len)
 	return ((ssize_t)(*ds)->len);
 }
 
-int	ft_dstrclose(t_dstr **ds, char **target)
+ssize_t	ft_dstrclose(t_dstr **ds, char **target)
 {
 	int	ret;
 
@@ -49,7 +49,7 @@ int	ft_dstrclose(t_dstr **ds, char **target)
 		return (ret);
 	if (target != NULL)
 	{
-		ret = (int)(*ds)->len;
+		ret = (*ds)->len;
 		if ((*ds)->alloced == (*ds)->len + 1)
 			*target = (*ds)->str;
 		else

@@ -6,18 +6,18 @@
 #    By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/12 19:01:12 by tpolonen          #+#    #+#              #
-#    Updated: 2022/04/06 18:19:12 by tpolonen         ###   ########.fr        #
+#    Updated: 2022/04/07 02:56:06 by tpolonen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
-CFLAGS = -c -g -Wall -Wextra -Werror -I$(HEADER_DIR)
-ARFLAGS = rcs
-
 HEADER_DIR = ./include/
-
+TESTS_DIR = ./tests/
 SRC_DIR = src
 OBJ_DIR = obj
+
+CC = gcc
+CFLAGS = -c -Wall -Wextra -Werror -I$(HEADER_DIR)
+ARFLAGS = rcs
 
 NAME = libft.a
 

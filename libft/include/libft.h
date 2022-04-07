@@ -15,6 +15,7 @@
 # include <string.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <limits.h>
 
 typedef struct s_list
 {
@@ -34,6 +35,7 @@ typedef struct s_dstr
  * Libc functions
  */
 
+void	*ft_calloc(size_t nmemb, size_t size);
 void	*ft_memset(void *b, int c, size_t len);
 void	ft_bzero(void *s, size_t n);
 void	*ft_memcpy(void *dst, const void *src, size_t n);
@@ -122,6 +124,6 @@ void	ft_lstprint(t_list *elem);
  */
 
 ssize_t	ft_dstrbuild(t_dstr **ds, const char *str, size_t len);
-int		ft_dstrclose(t_dstr **ds, char **target);
+ssize_t	ft_dstrclose(t_dstr **ds, char **target);
 
 #endif
