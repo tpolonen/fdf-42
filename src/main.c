@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:13:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 15:57:40 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/14 17:15:15 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void render_frame(t_param *params)
 	(void) params;
 }
 
-void read_input(int ac, char **av, t_param *params)
+static void read_params(int ac, char **av, t_param *params)
 {
 	if (ac == 2) 
 	{
@@ -41,9 +41,7 @@ int main(int ac, char **av)
 	t_image		img1;
 	t_image 	img2;
 
-	// read_input needs to set params->map and buncha other stuff
-	// gotta love side-effects
-	read_input(ac, av, &params);
+	read_params(ac, av, &params);
 	mlx = mlx_init();
 	// probably should get rid of the repetition here
 	img1.img = mlx_new_image(mlx, SIZE_X, SIZE_Y);
