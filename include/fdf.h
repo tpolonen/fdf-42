@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 13:05:01 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 16:22:44 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,10 @@
 # include <math.h>
 # include <fcntl.h>
 # include <stdio.h>
+# ifdef LINUX
+#  include <stdint.h>
+# endif
+
 # include "libft.h"
 # include "get_next_line.h"
 
