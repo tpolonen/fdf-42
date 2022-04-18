@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 16:22:44 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/07 13:05:01 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,10 +61,14 @@ typedef struct s_point3
 }	t_point3;
 
 // Drawing related
+// draw.c
 void		dda_draw_line(t_image *i, t_point2 *p1, t_point2 *p2, uint32_t c);
 uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b);
+// map.c
+void		render_map(t_params *params, t_point2 start_pos)
 
 // Reading and processing file
+// fileread.c
 void		read_file(char *filename, t_param *params);
 
 #endif

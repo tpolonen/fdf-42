@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:20:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 13:06:31 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/14 17:22:23 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,11 +66,11 @@ ssize_t	dintarr_close(t_dintarr **src, int **dst)
 	if (dst != NULL)
 	{
 		ret = (*src)->len;
-		if ((*src)->alloced == ((*src)->len) * sizeof(int))
+		if ((*src)->alloced == (*src)->len * sizeof(int))
 			*dst = (*src)->arr;
 		else
 		{
-			*dst = (int *) ft_memalloc((*src)->len * sizeof(int *));
+			*dst = (int *) ft_memalloc((*src)->len * sizeof(int));
 			if (dst)
 				ft_memcpy(*dst, (*src)->arr, (*src)->len * sizeof(int));
 			else
