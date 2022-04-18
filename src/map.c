@@ -6,11 +6,18 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/14 17:52:14 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:25:18 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+t_point2	*coord_to_point(t_point2 *p, int x, int y, int z)
+{
+	p->x = (x - y) * COS_30;
+	p->y = -z + (x + y) * SIN_30;
+	return (p);
+}
 
 void	render_map(t_params *params, t_point2 start_pos)
 {
@@ -35,4 +42,22 @@ void	render_map(t_params *params, t_point2 start_pos)
 	//There might be some math that helps us occlude the hidden surfaces and lines.
 	
 	//We only start drawing from the second node.
+
+	t_point2 *cur = (t_point2*)ft_memalloc(sizeof(t_point2));
+	t_point2 *next_x = (t_point2*)ft_memalloc(sizeof(t_point2));
+	t_point2 *next_z = (t_point2*)ft_memalloc(sizeof(t_point2));
+
+	for (int z = 0; z < map_height - 1; z++) {
+		for (int x = 0; x < params->cols[y] - 1; x++) {
+			cur = coord_to_point(cur, x, params->map[z][x], z);
+			next_x = coord_to_point(next_x, x+1, params->map[z][x+1], z);
+			next_z = coord_to_point(next_z, x, params->map[z+1][x], z+1);
+			dda_draw_line(params->bufs[0], cur, next_x, 0x00FFFFFF);
+			dda_draw_line(params->bufs[0], cur, next_z, 0x00FFFFFF);
+		}
+	}
+
+	ft_memdel(&cur);
+	ft_memdel(&next_x);
+	ft_memdel(&next_z);
 }

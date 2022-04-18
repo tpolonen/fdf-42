@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 13:05:01 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:25:26 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # define SIZE_X 1280
 # define SIZE_Y 720
 
+# define COS_30 0.8660254
+# define SIN_30 0.5
+
 typedef struct s_image
 {
 	void	*img;
@@ -43,6 +46,8 @@ typedef struct s_param
 	void	*win;
 	t_image	*bufs[2];
 	int		**map;
+	int		map_width;
+	int		map_height;
 	int		*cols;
 	int		magnitude;
 }	t_param;
@@ -65,7 +70,7 @@ typedef struct s_point3
 void		dda_draw_line(t_image *i, t_point2 *p1, t_point2 *p2, uint32_t c);
 uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b);
 // map.c
-void		render_map(t_params *params, t_point2 start_pos)
+void		render_map(t_params *params, t_point2 start_pos);
 
 // Reading and processing file
 // fileread.c

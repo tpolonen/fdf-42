@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 16:12:08 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/18 11:57:31 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -101,8 +101,13 @@ void		read_file(char* filename, t_param *params)
 	ft_dstrclose(&data, NULL);
 	params->map = map;
 	params->cols = cols;
+	params->map_height = rows;
+	params->map_width = -1;
 	ft_putendl("contents of col array:");
 	print_intarr(params->cols, rows);
 	ft_putendl("contents of map arr:");
-	for (int i=0; i<rows; i++) print_intarr(params->map[i], params->cols[i]);
+	for (int i=0; i<rows; i++) {
+		if (params->cols[i] > params->map_width) params->map_width = params->cols[i];
+		print_intarr(params->map[i], params->cols[i]);
+	}
 }

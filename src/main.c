@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/07 15:13:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/14 17:15:15 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/18 12:34:14 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,9 +16,23 @@
 	// static uint32_t line_color = 0x0042FF42;
 	// static uint32_t bg_color = 0x00000000;
 
+static void swap_images(t_image **img1, t_image **img2)
+{
+	t_image *temp;
+
+	temp = *img1;
+	*img1 = *img2;
+	*img2 = temp;
+}
+
 static void render_frame(t_param *params)
 {
-	(void) params;
+	t_point2 margin = {x:50, y:50};
+	printf("are we rendering frame\n");
+	bzero(params->buf[1]->addr, (buf->bytes_per_line * SIZE_Y));
+	render_map(params, params->buf[1], margin);
+	mlx_put_image_to_window(params->mlx, params->win, params->buf[1], 0, 0);
+	swap_images(6(params->buf[0]), &(params->buf[1]));
 }
 
 static void read_params(int ac, char **av, t_param *params)
@@ -28,8 +42,8 @@ static void read_params(int ac, char **av, t_param *params)
 		read_file(av[1], params);
 	} 
 	else {
-	printf("Invalid parameters: expected map filename, got %d arguments\n", ac - 1);
-	exit(2);
+		printf("Invalid parameters: expected map filename, got %d arguments\n", ac - 1);
+		exit(2);
 	}
 }
 
@@ -57,6 +71,6 @@ int main(int ac, char **av)
 	params.bufs[1] = &img2;
 	params.magnitude = 50;
 	render_frame(&params);
-	//mlx_loop(mlx);
+	mlx_loop(mlx);
 	return(0);
 }
