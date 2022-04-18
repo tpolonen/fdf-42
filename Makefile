@@ -6,7 +6,7 @@
 #    By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/12 19:01:12 by tpolonen          #+#    #+#              #
-#    Updated: 2022/04/07 16:25:17 by tpolonen         ###   ########.fr        #
+#    Updated: 2022/04/18 13:18:35 by tpolonen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #
@@ -24,7 +24,7 @@ OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 CC 			:= gcc
 CPPFLAGS 	:= -I$(LIBHEADER_DIR) -I$(HEADER_DIR)
 LCPPFLAGS	:= -I$(LLIBHEADER_DIR) -DLINUX
-CFLAGS 		:= -g -Wall -Wextra -Werror
+CFLAGS 		:= -g
 LDFLAGS 	:= -L$(LIB_DIR)
 LDLIBS 		:= -lft -lmlx -lm -framework OpenGL -framework AppKit
 LLDLIBS		:= -lft -lmlx -lm -lz -lXext -lX11
