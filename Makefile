@@ -6,7 +6,7 @@
 #    By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/12 19:01:12 by tpolonen          #+#    #+#              #
-#    Updated: 2022/04/18 13:18:35 by tpolonen         ###   ########.fr        #
+#    Updated: 2022/04/19 17:20:17 by tpolonen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #
@@ -34,8 +34,8 @@ LLDLIBS		:= -lft -lmlx -lm -lz -lXext -lX11
 UNAME := $(shell uname)
 
 ifeq ($(UNAME), Linux)
-	CPPFLAGS += LCPPFLAGS
-	LDLIBS = LLDLIBS
+	CPPFLAGS += $(LCPPFLAGS)
+	LDLIBS = $(LLDLIBS)
 endif
 
 all: lib $(BIN)
@@ -47,11 +47,11 @@ lib:
 	@echo Compiled library
 
 $(BIN): $(OBJ)
-	@$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
+	$(CC) $(LDFLAGS) $^ $(LDLIBS) -o $@
 	@echo Compiled binary file
 
 $(OBJ_DIR)/%.o: $(SRC_DIR)/%.c | $(OBJ_DIR)
-	@$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
+	$(CC) $(CPPFLAGS) $(CFLAGS) -c $< -o $@
 
 $(OBJ_DIR):
 	mkdir -p $@
