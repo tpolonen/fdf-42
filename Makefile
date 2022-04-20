@@ -6,7 +6,7 @@
 #    By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/12 19:01:12 by tpolonen          #+#    #+#              #
-#    Updated: 2022/04/19 17:20:17 by tpolonen         ###   ########.fr        #
+#    Updated: 2022/04/20 13:53:34 by tpolonen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 #
@@ -39,8 +39,6 @@ ifeq ($(UNAME), Linux)
 endif
 
 all: lib $(BIN)
-	@echo $(CPPFLAGS)
-	@echo $(LDLIBS)
 
 lib:
 	make -C $(LIB_DIR)

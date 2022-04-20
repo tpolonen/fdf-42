@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/19 16:51:45 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/20 14:08:07 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,12 +42,11 @@ void	render_frame(t_param *p)
 	
 	buff = p->bufs[cur_buff];
 	ft_bzero(buff->addr, buff->bytes_per_line * SIZE_Y);
-	render_map(p, buff, 50, 50);
-	printf("address of the current buff struct: %p\n", buff);
-	printf("address of the image inside the struct:%p\n", buff->img);
-	printf("address of the addr inside the image inside the struct:%p\n", buff->addr);
+	render_map(p, buff);
+//	printf("address of the current buff struct: %p\n", buff);
+//	printf("address of the image inside the struct:%p\n", buff->img);
+//	printf("address of the addr inside the image inside the struct:%p\n", buff->addr);
 	ret = mlx_put_image_to_window(p->mlx, p->win, buff->img, 0, 0);
-	printf("got this back from put_image: %p\n",(void *) ret);
 	cur_buff = (cur_buff == 0);
 }
 
@@ -62,7 +61,11 @@ int	main(int ac, char **av)
 	params.bufs[0] = init_buff(params.mlx, &buff1);
 	params.bufs[1] = init_buff(params.mlx, &buff2);
 	params.win = mlx_new_window(params.mlx, SIZE_X, SIZE_Y, av[1]);
-	printf("address of the mlx pointer %p\naddress of the win pointer %p\n", params.mlx, params.win);
+	params.scale = DEFAULT_SCALE;
+	params.magnitude = DEFAULT_MAGNITUDE;
+	params.margin.x = SIZE_X / 2;
+	params.margin.y = 50;
+//	printf("address of the mlx pointer %p\naddress of the win pointer %p\n", params.mlx, params.win);
 	render_frame(&params);
 	mlx_loop(params.mlx);
 	return (0);
