@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/19 16:44:41 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:37:24 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 static void	coord_to_point(t_point2 *p, int x, int y, int z)
 {
-	p->x = (x - y) * COS_30;
-	p->y = -z + (x + y) * SIN_30;
+	p->x = (x - z) * COS_30;
+	p->y = -y + (x + z) * SIN_30;
 
 	p->x *= 10;
 	p->y *= 10;
@@ -23,7 +23,7 @@ static void	coord_to_point(t_point2 *p, int x, int y, int z)
 	p->x += SIZE_X/2;
 	p->y += SIZE_Y/2;
 
-	printf("drawing point to x:%d y:%d\n", p->x, p->y);
+	printf("drawing point to x:%f y:%f\n", p->x, p->y);
 }
 
 void	render_map(t_param *params, t_image *buf, int margin_x, int margin_y)

@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/19 16:08:35 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:37:04 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,8 +54,8 @@ typedef struct s_param
 
 typedef struct s_point2
 {
-	int	x;
-	int	y;
+	double	x;
+	double	y;
 }	t_point2;
 
 typedef struct s_point3

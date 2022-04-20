@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/19 16:18:04 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/20 12:40:15 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
 	uint8_t *dst;
 
 	dst = (uint8_t *)img->addr;
-	int dx = p2->x - p1->x;
-	int dy = p2->y - p1->y;
+	int dx = (int)p2->x - (int)p1->x;
+	int dy = (int)p2->y - (int)p1->y;
 	//calculate steps required for creating pixels
 	int step = abs(abs(dx) > abs(dy) ? dx : dy);
 	//calculate increment in x & y for each step
