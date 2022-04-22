@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/20 13:55:10 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/21 13:05:04 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,16 @@
 
 # define COS_30 0.8660254
 # define SIN_30 0.5
+
+# define KEY_ESC   53    
+# define KEY_LEFT  123  
+# define KEY_RIGHT 124  
+# define KEY_DOWN  125  
+# define KEY_UP    126   
+# define KEY_W     13   
+# define KEY_A     0    
+# define KEY_S     1    
+# define KEY_D     2    
 
 typedef struct s_point2
 {
@@ -80,5 +90,12 @@ void		render_map(t_param *params, t_image *buf);
 // Reading and processing file
 // fileread.c
 void		read_file(char *filename, t_param *params);
+
+// Events
+// events.c
+int			event_keydown(int keycode, void *param);
+void		handle_exit(char *msg, void *params);
+// main.c
+void		render_frame(t_param *p);
 
 #endif

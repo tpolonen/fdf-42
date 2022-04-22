@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/20 14:08:07 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/21 13:46:29 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,8 @@ int	main(int ac, char **av)
 
 	read_params(ac, av, &params);
 	params.mlx = mlx_init();
+	if (!params.mlx)
+		handle_exit("Couldn't initialize MLX-library.", (void *)&params);
 	params.bufs[0] = init_buff(params.mlx, &buff1);
 	params.bufs[1] = init_buff(params.mlx, &buff2);
 	params.win = mlx_new_window(params.mlx, SIZE_X, SIZE_Y, av[1]);
@@ -67,6 +69,7 @@ int	main(int ac, char **av)
 	params.margin.y = 50;
 //	printf("address of the mlx pointer %p\naddress of the win pointer %p\n", params.mlx, params.win);
 	render_frame(&params);
+	mlx_hook(params.win, 2, 0, event_keydown, (void *)&params);
 	mlx_loop(params.mlx);
 	return (0);
 }

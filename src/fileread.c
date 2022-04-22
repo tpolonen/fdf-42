@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/18 11:57:31 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/22 14:24:41 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,11 @@ static int	**read_cols(char *nptr, int *col_arr, int rows)
 		cols = 0;
 		while (*nptr != '\n' && *nptr != '\0')
 		{
+			if (!ft_isspace(*nptr) && !ft_isdigit(*nptr) && !(*nptr == '-' ||  *nptr == '+'))
+			{
+				dintarr_close(&darr, NULL);
+				return (NULL);
+			}
 			dintarr_add(&darr, (int)ft_strtol(nptr, &nptr));
 			cols++;
 			while(isskippable(*nptr)) nptr++;
@@ -83,7 +88,6 @@ void		read_file(char* filename, t_param *params)
 	int		fd;
 	int		rows;
 	int		**map;
-	int		*cols;
 	t_dstr	*data;
 	
 	(void) params;
@@ -96,11 +100,14 @@ void		read_file(char* filename, t_param *params)
 	rows = 0;
 	data = NULL;
 	rows = read_rows(fd, &data);
-	cols = (int *)ft_memalloc(sizeof(int) * rows);
-	map = read_cols(data->str, cols, rows);
+	if (!rows)
+		handle_exit("Map error: Empty file", params);
+	params->cols = (int *)ft_memalloc(sizeof(int) * rows);
+	map = read_cols(data->str, params->cols, rows);
 	ft_dstrclose(&data, NULL);
+	if (!map)
+		handle_exit("Map error: Invalid characters", params);
 	params->map = map;
-	params->cols = cols;
 	params->map_height = rows;
 	params->map_width = -1;
 	ft_putendl("contents of col array:");
