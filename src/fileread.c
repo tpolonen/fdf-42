@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/22 14:24:41 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/23 10:17:20 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@ static int	isskippable(char c)
 static void	print_intarr(int *arr, int len)
 {
 	int	i;
-	
+
 	i = 0;
-	while(i < len)
+	while (i < len)
 	{
 		ft_putnbr(arr[i]);
 		ft_putstr(" ");
@@ -42,25 +42,27 @@ static int	**read_cols(char *nptr, int *col_arr, int rows)
 	map = (int **)ft_memalloc(sizeof(int *) * rows);
 	i = 0;
 	darr = NULL;
-	while(i < rows)
+	while (i < rows)
 	{
 		cols = 0;
 		while (*nptr != '\n' && *nptr != '\0')
 		{
-			if (!ft_isspace(*nptr) && !ft_isdigit(*nptr) && !(*nptr == '-' ||  *nptr == '+'))
+			if (!ft_isspace(*nptr) && !ft_isdigit(*nptr) && \
+				!(*nptr == '-' || *nptr == '+'))
 			{
 				dintarr_close(&darr, NULL);
 				return (NULL);
 			}
 			dintarr_add(&darr, (int)ft_strtol(nptr, &nptr));
 			cols++;
-			while(isskippable(*nptr)) nptr++;
+			while (isskippable(*nptr))
+				nptr++;
 			if (*nptr == '\n' || *nptr == '\0')
 				dintarr_close(&darr, &(map[i]));
 		}
 		col_arr[i] = cols;
 		i++;
-		nptr++;;
+		nptr++;
 	}
 	return (map);
 }
@@ -83,13 +85,13 @@ static int	read_rows(int fd, t_dstr **data)
 	}
 }
 
-void		read_file(char* filename, t_param *params)
+void	read_file(char *filename, t_param *params)
 {
 	int		fd;
 	int		rows;
 	int		**map;
 	t_dstr	*data;
-	
+
 	(void) params;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
