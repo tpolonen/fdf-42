@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/23 10:17:20 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/25 15:09:18 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,14 +32,13 @@ static void	print_intarr(int *arr, int len)
 	ft_putendl("");
 }
 
-static int	**read_cols(char *nptr, int *col_arr, int rows)
+static void	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 {
 	t_dintarr	*darr;
-	int			**map;
 	int			i;
 	int			cols;
 
-	map = (int **)ft_memalloc(sizeof(int *) * rows);
+	params->map = (int **)ft_memalloc(sizeof(int *) * rows);
 	i = 0;
 	darr = NULL;
 	while (i < rows)
@@ -51,20 +50,17 @@ static int	**read_cols(char *nptr, int *col_arr, int rows)
 				!(*nptr == '-' || *nptr == '+'))
 			{
 				dintarr_close(&darr, NULL);
-				return (NULL);
+				return ;
 			}
 			dintarr_add(&darr, (int)ft_strtol(nptr, &nptr));
 			cols++;
 			while (isskippable(*nptr))
 				nptr++;
-			if (*nptr == '\n' || *nptr == '\0')
-				dintarr_close(&darr, &(map[i]));
 		}
-		col_arr[i] = cols;
-		i++;
+		dintarr_close(&darr, &(params->map[i]));
+		col_arr[i++] = cols;
 		nptr++;
 	}
-	return (map);
 }
 
 static int	read_rows(int fd, t_dstr **data)
@@ -89,7 +85,6 @@ void	read_file(char *filename, t_param *params)
 {
 	int		fd;
 	int		rows;
-	int		**map;
 	t_dstr	*data;
 
 	(void) params;
@@ -105,11 +100,10 @@ void	read_file(char *filename, t_param *params)
 	if (!rows)
 		handle_exit("Map error: Empty file", params);
 	params->cols = (int *)ft_memalloc(sizeof(int) * rows);
-	map = read_cols(data->str, params->cols, rows);
+	read_cols(data->str, params->cols, rows, params);
 	ft_dstrclose(&data, NULL);
 	if (!map)
 		handle_exit("Map error: Invalid characters", params);
-	params->map = map;
 	params->map_height = rows;
 	params->map_width = -1;
 	ft_putendl("contents of col array:");
