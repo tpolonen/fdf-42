@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/25 16:07:43 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/04/25 16:31:06 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,11 @@ static int	**free_map(int ***map, int **col_arr, int rows)
 	ft_memdel((void **)col_arr);
 	return (NULL);
 }	
+
+static int	isvalidchar(char c)
+{
+	return (ft_isdigit(c) || ft_isspace(c) || c == '+' || c == '-');
+}
 
 static int	isskippable(char c)
 {
@@ -58,7 +63,7 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 		cols = 0;
 		while (*nptr != '\n' && *nptr != '\0')
 		{
-			if (isskippable(*nptr))
+			if (!isvalidchar(*nptr))
 			{
 				dintarr_close(&darr, NULL);
 				return (free_map(&(params->map), &col_arr, rows));
@@ -70,6 +75,8 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 		}
 		dintarr_close(&darr, &(params->map[i]));
 		col_arr[i++] = cols;
+		if (cols == 0)
+			return (free_map(&(params->map), &col_arr, rows));
 		nptr++;
 	}
 	return (params->map);
@@ -125,4 +132,6 @@ void	read_file(char *filename, t_param *params)
 		if (params->cols[i] > params->map_width) params->map_width = params->cols[i];
 		print_intarr(params->map[i], params->cols[i]);
 	}
+	if (params->map_width == 0)
+		handle_exit("Map error: Empty rows", params);
 }
