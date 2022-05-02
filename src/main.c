@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/21 13:46:29 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/02 16:03:59 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,9 +43,6 @@ void	render_frame(t_param *p)
 	buff = p->bufs[cur_buff];
 	ft_bzero(buff->addr, buff->bytes_per_line * SIZE_Y);
 	render_map(p, buff);
-//	printf("address of the current buff struct: %p\n", buff);
-//	printf("address of the image inside the struct:%p\n", buff->img);
-//	printf("address of the addr inside the image inside the struct:%p\n", buff->addr);
 	ret = mlx_put_image_to_window(p->mlx, p->win, buff->img, 0, 0);
 	cur_buff = (cur_buff == 0);
 }
@@ -67,7 +64,8 @@ int	main(int ac, char **av)
 	params.magnitude = DEFAULT_MAGNITUDE;
 	params.margin.x = SIZE_X / 2;
 	params.margin.y = 50;
-//	printf("address of the mlx pointer %p\naddress of the win pointer %p\n", params.mlx, params.win);
+	load_projections(params.projs);
+	params.cur_proj = 0;
 	render_frame(&params);
 	mlx_hook(params.win, 2, 0, event_keydown, (void *)&params);
 	mlx_loop(params.mlx);

@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/02 13:00:04 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/02 15:45:20 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,7 @@
 
 static void	coord_to_point(t_point2 *p, t_point3 *c, t_param *params)
 {
-	p->x = (c->x - c->z) * COS_30;
-	p->y = -c->y + (c->x + c->z) * SIN_30;
+	params->projs[params->cur_proj](p, c);
 	p->x *= params->scale;
 	p->y *= params->scale;
 	p->x += params->margin.x;
