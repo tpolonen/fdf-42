@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/21 13:05:04 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/02 14:12:17 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,14 @@
 # define DEFAULT_SCALE 15.00
 # define DEFAULT_MAGNITUDE 0.50
 
+# define PROJ_AMOUNT 3
+
 # define COS_30 0.8660254
 # define SIN_30 0.5
+# define COS_42 0.7431448
+# define SIN_42 0.6691306
+# define SIN_7 0.1218693
+# define COS_7 0.9925461
 
 # define KEY_ESC   53    
 # define KEY_LEFT  123  
@@ -66,6 +72,8 @@ typedef struct s_image
 	int		endian;
 }	t_image;
 
+typedef void	(*t_proj)(t_point2 *p, t_point3 *c);
+
 typedef struct s_param
 {
 	void		*mlx;
@@ -78,6 +86,7 @@ typedef struct s_param
 	double		scale;
 	double		magnitude;
 	t_point2	margin;
+	t_proj		projs[PROJ_AMOUNT];
 }	t_param;
 
 // Drawing related

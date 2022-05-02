@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/21 14:02:29 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/02 13:00:04 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,10 @@ static void	coord_to_point(t_point2 *p, t_point3 *c, t_param *params)
 {
 	p->x = (c->x - c->z) * COS_30;
 	p->y = -c->y + (c->x + c->z) * SIN_30;
-
 	p->x *= params->scale;
 	p->y *= params->scale;
-
 	p->x += params->margin.x;
 	p->y += params->margin.y;
-
-
-//	printf("drawing point to x:%f y:%f\n,", p->x, p->y);
 }
 
 static void	get_coord(t_param *params, t_point3 *coord, int x, int z)
@@ -40,7 +35,6 @@ void	render_map(t_param *params, t_image *buf)
 	t_point2 next_x;
 	t_point2 next_z;
 	t_point3 coord;
-	//printf("params margin x:%f y:%f scale:%f magn: %f\n", params->margin.x, params->margin.y, params->scale, params->magnitude);
 
 	for (int z = 0; z < params->map_height; z++) {
 		for (int x = 0; x < params->cols[z]; x++) {
@@ -60,5 +54,4 @@ void	render_map(t_param *params, t_image *buf)
 			}
 		}
 	}
-//	printf("map rendered\n");
 }
