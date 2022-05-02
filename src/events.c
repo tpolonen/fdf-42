@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 12:12:10 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/02 16:03:59 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/02 17:23:26 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,10 +44,22 @@ static int	handle_cam(int keycode, t_param *params)
 
 void	handle_exit(char *msg, void *params)
 {
+	int			rows;
+	t_param		*p;
+
+	p = (t_param *) params;
 	ft_putendl(msg);
 	// probably should free all allocated memory, params contains all(?)
 	// *mlx, *win, *bufs[2]->two t_image structs with *img pointer,
 	// **map, *cols
+	rows = 0;
+	printf("map height = %d\n", p->map_height);
+	while (rows < p->map_height)
+	{
+		free(p->map[rows++]);
+	}
+	free(p->map);
+	free(p->cols);
 	system("leaks fdf");
 	exit(0);
 }
@@ -57,17 +69,21 @@ void	handle_exit(char *msg, void *params)
 int	event_keydown(int keycode, void *params)
 {
 	int	ret;
+	t_param *p;
 
-	printf("Keycode: %d\n", keycode);
-
+	p = (t_param *) params;
 	ret = 0;
-	if (keycode > 122 && keycode < 127)
-		ret = handle_cam(keycode, (t_param *) params);
-	if ((keycode >= 0 && keycode < 3) || keycode == 13)
-		ret = handle_cam(keycode, (t_param *) params);
+	if ((keycode > 122 && keycode < 127) || 
+			(keycode >= 0 && keycode < 3) || keycode == 13)
+		ret = handle_cam(keycode, p);
+	if (keycode == KEY_TAB)
+	{
+		ret = 1;
+		p->cur_proj = (p->cur_proj + 1) % PROJ_AMOUNT;
+	}
 	if (keycode == 53)
-		handle_exit("Closing down...", (t_param *) params);
+		handle_exit("Closing down...", p);
 	if (ret)
-		render_frame((t_param *) params);
+		render_frame(p);
 	return (keycode);
 }
