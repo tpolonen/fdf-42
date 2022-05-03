@@ -6,12 +6,11 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:20:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/14 17:22:23 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:30:39 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "dintarr.h"
-#define DEFAULT_SIZE 3 
 
 int	dintarr_create(t_dintarr **darr, ssize_t size)
 {
@@ -35,7 +34,7 @@ ssize_t	dintarr_add(t_dintarr **darr, const int n)
 
 	if (*darr == NULL)
 	{
-		if (!dintarr_create(darr, DEFAULT_SIZE))
+		if (!dintarr_create(darr, DINT_DEF_SIZE))
 			return (-1);
 	}
 	else if ((*darr)->alloced < (((*darr)->len + 1)) * sizeof(int))

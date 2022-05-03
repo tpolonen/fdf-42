@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/02 16:07:22 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:03:00 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,6 +106,7 @@ void		load_projections(t_proj projs[PROJ_AMOUNT]);
 /* Reading and processing file */
 // fileread.c
 void		read_file(char *filename, t_param *params);
+int			**free_map(int ***map, int **col_arr, int rows);
 
 /* Events */
 // events.c

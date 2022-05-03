@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 12:12:10 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/02 17:23:26 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:07:20 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,23 +49,11 @@ void	handle_exit(char *msg, void *params)
 
 	p = (t_param *) params;
 	ft_putendl(msg);
-	// probably should free all allocated memory, params contains all(?)
-	// *mlx, *win, *bufs[2]->two t_image structs with *img pointer,
-	// **map, *cols
-	rows = 0;
-	printf("map height = %d\n", p->map_height);
-	while (rows < p->map_height)
-	{
-		free(p->map[rows++]);
-	}
-	free(p->map);
-	free(p->cols);
+	free_map(&(p->map), &(p->cols), p->map_height);
 	system("leaks fdf");
 	exit(0);
 }
 
-// what's missing?
-// 1. switch projection (tab)
 int	event_keydown(int keycode, void *params)
 {
 	int	ret;

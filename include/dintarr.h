@@ -6,13 +6,14 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 12:21:53 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 13:03:08 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:30:53 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef DINTARR_H
 # define DINTARR_H
 # include "fdf.h"
+# define DINT_DEF_SIZE 10 
 
 typedef struct s_dintarr
 {

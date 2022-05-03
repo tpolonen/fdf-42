@@ -6,14 +6,14 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/25 16:31:06 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 12:31:25 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "dintarr.h"
 
-static int	**free_map(int ***map, int **col_arr, int rows)
+int	**free_map(int ***map, int **col_arr, int rows)
 {
 	int i;
 
@@ -97,6 +97,7 @@ static int	read_rows(int fd, t_dstr **data)
 		ft_dstrbuild(data, buf, len);
 		ft_dstrbuild(data, "\n", 1);
 		rows++;
+		free(buf);
 	}
 }
 
