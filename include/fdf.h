@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 19:10:28 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/03 23:00:13 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,8 +82,8 @@ typedef struct s_param
 	void		*mlx;
 	void		*win;
 	t_image		*bufs[2];
+	int			cur_buf;
 	int			**map;
-	int			map_width;
 	int			map_height;
 	int			*cols;
 	double		scale;
@@ -102,7 +102,7 @@ uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b);
 void		put_instructions(t_param *params);
 
 // map.c
-void		render_map(t_param *params, t_image *buf);
+void		render_map(t_param *params);
 int			**free_map(int ***map, int **col_arr, int rows);
 
 // coordinates.c

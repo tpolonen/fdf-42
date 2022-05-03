@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 19:45:02 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/03 22:44:57 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,16 @@
 static int	isvalidchar(char c)
 {
 	return (ft_isdigit(c) || ft_isspace(c) || c == '+' || c == '-');
+}
+
+static int	get_col(t_dintarr **darr, char **nptr, int cols)
+{
+	dintarr_add(darr, (int)ft_strtol(*nptr, nptr));
+	cols++;
+	while (!isvalidchar(**nptr) && **nptr != '\0' && \
+			**nptr != '\n' && ft_isspace(**nptr))
+		(*nptr)++;
+	return (cols);
 }
 
 static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
@@ -33,15 +43,9 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 		while (*nptr != '\n' && *nptr != '\0')
 		{
 			if (!isvalidchar(*nptr))
-			{
-				dintarr_close(&darr, NULL);
-				return (free_map(&(params->map), &col_arr, rows));
-			}
-			dintarr_add(&darr, (int)ft_strtol(nptr, &nptr));
-			cols++;
-			while (!isvalidchar(*nptr) && *nptr != '\0' && \
-					*nptr != '\n' && ft_isspace(*nptr))
-				nptr++;
+				return (free_map(&(params->map), &col_arr, rows + \
+						dintarr_close(&darr, NULL)));
+			cols = get_col(&darr, &nptr, cols);
 		}
 		dintarr_close(&darr, &(params->map[i]));
 		col_arr[i++] = cols;
@@ -77,7 +81,6 @@ void	read_file(char *filename, t_param *params)
 	int		rows;
 	t_dstr	*data;
 
-	(void) params;
 	fd = open(filename, O_RDONLY);
 	if (fd == -1)
 	{
@@ -95,9 +98,4 @@ void	read_file(char *filename, t_param *params)
 	if (!params->map)
 		handle_exit("Map error: Invalid characters", params);
 	params->map_height = rows;
-	params->map_width = -1;
-	for (int i=0; i<rows; i++)
-		if (params->cols[i] > params->map_width) params->map_width = params->cols[i];
-	if (params->map_width == 0)
-		handle_exit("Map error: Empty rows", params);
 }

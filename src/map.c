@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 19:10:30 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/03 23:08:43 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,29 +40,39 @@ static void	get_coord(t_param *params, t_point3 *coord, int x, int z)
 	coord->z = z;
 }
 
-void	render_map(t_param *params, t_image *buf)
+static void	draw_line(t_param *params, t_point2 *start, int x, int z)
 {
-	t_point2 cur;
-	t_point2 next_x;
-	t_point2 next_z;
-	t_point3 coord;
+	t_point2	end;
+	t_point3	coord;
+	t_image		*buf;
 
-	for (int z = 0; z < params->map_height; z++) {
-		for (int x = 0; x < params->cols[z]; x++) {
+	buf = params->bufs[params->cur_buf];
+	get_coord(params, &coord, x, z);
+	coord_to_point(&end, &coord, params);
+	dda_draw_line(buf, start, &end, params->color);
+}
+
+void	render_map(t_param *params)
+{
+	t_point2	cur;
+	t_point3	coord;
+	int			z;
+	int			x;
+
+	z = 0;
+	while (z < params->map_height)
+	{
+		x = 0;
+		while (x < params->cols[z])
+		{
 			get_coord(params, &coord, x, z);
 			coord_to_point(&cur, &coord, params);
 			if (z < params->map_height - 1)
-			{
-				get_coord(params, &coord, x, z + 1);
-				coord_to_point(&next_z, &coord, params);
-				dda_draw_line(buf, &cur, &next_z, params->color);
-			}
+				draw_line(params, &cur, x, z + 1);
 			if (x < params->cols[z] - 1)
-			{
-				get_coord(params, &coord, x + 1, z);
-				coord_to_point(&next_x, &coord, params);
-				dda_draw_line(buf, &cur, &next_x, params->color);
-			}
+				draw_line(params, &cur, x + 1, z);
+			x++;
 		}
+		z++;
 	}
 }
