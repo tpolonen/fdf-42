@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 12:31:25 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:01:51 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,6 @@ static int	isvalidchar(char c)
 static int	isskippable(char c)
 {
 	return (c != '\0' && c != '\n' && c != '-' && c != '+' && !ft_isdigit(c));
-}
-
-static void	print_intarr(int *arr, int len)
-{
-	int	i;
-
-	i = 0;
-	while (i < len)
-	{
-		ft_putnbr(arr[i]);
-		ft_putstr(" ");
-		i++;
-	}
-	ft_putendl("");
 }
 
 static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
@@ -126,13 +112,8 @@ void	read_file(char *filename, t_param *params)
 		handle_exit("Map error: Invalid characters", params);
 	params->map_height = rows;
 	params->map_width = -1;
-	ft_putendl("contents of col array:");
-	print_intarr(params->cols, rows);
-	ft_putendl("contents of map arr:");
-	for (int i=0; i<rows; i++) {
+	for (int i=0; i<rows; i++)
 		if (params->cols[i] > params->map_width) params->map_width = params->cols[i];
-		print_intarr(params->map[i], params->cols[i]);
-	}
 	if (params->map_width == 0)
 		handle_exit("Map error: Empty rows", params);
 }

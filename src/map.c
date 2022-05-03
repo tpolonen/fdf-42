@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/02 15:45:20 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 17:52:32 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,13 +43,13 @@ void	render_map(t_param *params, t_image *buf)
 			{
 				get_coord(params, &coord, x, z + 1);
 				coord_to_point(&next_z, &coord, params);
-				dda_draw_line(buf, &cur, &next_z, 0x00FF4242);
+				dda_draw_line(buf, &cur, &next_z, params->color);
 			}
 			if (x < params->cols[z] - 1)
 			{
 				get_coord(params, &coord, x + 1, z);
 				coord_to_point(&next_x, &coord, params);
-				dda_draw_line(buf, &cur, &next_x, 0x0042FF42);
+				dda_draw_line(buf, &cur, &next_x, params->color);
 			}
 		}
 	}

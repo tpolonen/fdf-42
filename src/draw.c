@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/22 14:21:24 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:44:13 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,16 @@ uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b)
 	color |= (g << (sizeof(char) * 8));
 	color |= (r << ((sizeof(char) * 8) * 2));
 	return (color);
+}
+
+void		put_instructions(t_param *p)
+{
+	mlx_string_put(p->mlx, p->win, 10, 10, 0x00FFFFFF, "W/A/S/D: Move camera");
+	mlx_string_put(p->mlx, p->win, 10, 30, 0x00FFFFFF, "Up/Down: Scale height");
+	mlx_string_put(p->mlx, p->win, 10, 50, 0x00FFFFFF, "Left/Right: Zoom");
+	mlx_string_put(p->mlx, p->win, 10, 70, 0x00FFFFFF, "Tab: Change projection");
+	mlx_string_put(p->mlx, p->win, 10, 90, 0x00FFFFFF, "R: Toggle this text");
+	mlx_string_put(p->mlx, p->win, 10, 110, 0x00FFFFFF, "Esc: Exit");
 }
 
 void dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
@@ -45,5 +55,4 @@ void dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
 		if (x >= SIZE_X || x < 0 || y >= SIZE_Y || y < 0) continue;
 		*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
 	}
-//	printf("\n");
 }

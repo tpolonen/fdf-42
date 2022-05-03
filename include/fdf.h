@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 12:03:00 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 18:33:12 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@
 
 # define DEFAULT_SCALE 15.00
 # define DEFAULT_MAGNITUDE 0.50
+# define DEFAULT_COLOR 0x0042FF42
 
 # define PROJ_AMOUNT 3
 
@@ -90,12 +91,15 @@ typedef struct s_param
 	t_point2	margin;
 	t_proj		projs[PROJ_AMOUNT];
 	int			cur_proj;
+	int			hide_text;
+	uint32_t	color;
 }	t_param;
 
 /* Drawing related */
 // draw.c
 void		dda_draw_line(t_image *i, t_point2 *p1, t_point2 *p2, uint32_t c);
 uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b);
+void		put_instructions(t_param *params);
 
 // map.c
 void		render_map(t_param *params, t_image *buf);
@@ -111,6 +115,7 @@ int			**free_map(int ***map, int **col_arr, int rows);
 /* Events */
 // events.c
 int			event_keydown(int keycode, void *param);
+int			event_destroy(void *params);
 void		handle_exit(char *msg, void *params);
 
 // main.c

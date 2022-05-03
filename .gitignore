@@ -9,3 +9,5 @@ fdf
 *.swp
 *.idea
 *.orig
+CMake*
+cmake*
