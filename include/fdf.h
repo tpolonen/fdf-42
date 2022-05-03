@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 18:33:12 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:10:28 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,6 +103,7 @@ void		put_instructions(t_param *params);
 
 // map.c
 void		render_map(t_param *params, t_image *buf);
+int			**free_map(int ***map, int **col_arr, int rows);
 
 // coordinates.c
 void		load_projections(t_proj projs[PROJ_AMOUNT]);
@@ -110,7 +111,6 @@ void		load_projections(t_proj projs[PROJ_AMOUNT]);
 /* Reading and processing file */
 // fileread.c
 void		read_file(char *filename, t_param *params);
-int			**free_map(int ***map, int **col_arr, int rows);
 
 /* Events */
 // events.c

@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 18:47:04 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:38:58 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,14 +14,14 @@
 
 static void	read_params(int ac, char **av, t_param *params)
 {
-	if (ac == 2) 
+	if (ac == 2)
 	{
 		params->color = DEFAULT_COLOR;
 		read_file(av[1], params);
-	} 
+	}
 	else if (ac == 5)
 	{
-		params->color = rgb_to_uint((unsigned char)ft_atoi(av[2]), 
+		params->color = rgb_to_uint((unsigned char)ft_atoi(av[2]),
 				(unsigned char)ft_atoi(av[3]),
 				(unsigned char)ft_atoi(av[4]));
 		read_file(av[1], params);
@@ -47,8 +47,8 @@ void	render_frame(t_param *p)
 {
 	static int	cur_buff;
 	t_image		*buff;
-	int 		ret;
-	
+	int			ret;
+
 	buff = p->bufs[cur_buff];
 	ft_bzero(buff->addr, buff->bytes_per_line * SIZE_Y);
 	render_map(p, buff);
@@ -67,6 +67,7 @@ static void	init_params(t_param *params)
 	params->margin.y = 50;
 	load_projections(params->projs);
 	params->cur_proj = 0;
+	params->map_width = -1;
 }
 
 int	main(int ac, char **av)

@@ -6,11 +6,23 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 17:52:32 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:10:30 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
+
+int	**free_map(int ***map, int **col_arr, int rows)
+{
+	int	i;
+
+	i = 0;
+	while (i < rows)
+		free((*map)[i++]);
+	ft_memdel((void **)map);
+	ft_memdel((void **)col_arr);
+	return (NULL);
+}	
 
 static void	coord_to_point(t_point2 *p, t_point3 *c, t_param *params)
 {

@@ -6,33 +6,16 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 18:01:51 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:45:02 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "dintarr.h"
 
-int	**free_map(int ***map, int **col_arr, int rows)
-{
-	int i;
-
-	i = 0;
-	while (i < rows)
-		free((*map)[i++]);
-	ft_memdel((void **)map);
-	ft_memdel((void **)col_arr);
-	return (NULL);
-}	
-
 static int	isvalidchar(char c)
 {
 	return (ft_isdigit(c) || ft_isspace(c) || c == '+' || c == '-');
-}
-
-static int	isskippable(char c)
-{
-	return (c != '\0' && c != '\n' && c != '-' && c != '+' && !ft_isdigit(c));
 }
 
 static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
@@ -56,7 +39,8 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 			}
 			dintarr_add(&darr, (int)ft_strtol(nptr, &nptr));
 			cols++;
-			while (isskippable(*nptr))
+			while (!isvalidchar(*nptr) && *nptr != '\0' && \
+					*nptr != '\n' && ft_isspace(*nptr))
 				nptr++;
 		}
 		dintarr_close(&darr, &(params->map[i]));

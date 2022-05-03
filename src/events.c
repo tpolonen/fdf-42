@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 12:12:10 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 18:47:39 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/03 19:32:36 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,8 @@ void	handle_exit(char *msg, void *params)
 
 	p = (t_param *) params;
 	ft_putendl(msg);
-	free_map(&(p->map), &(p->cols), p->map_height);
+	if (p)
+		free_map(&(p->map), &(p->cols), p->map_height);
 	system("leaks fdf");
 	exit(0);
 }
@@ -62,12 +63,12 @@ int	event_destroy(void *params)
 
 int	event_keydown(int keycode, void *params)
 {
-	int	ret;
-	t_param *p;
+	int		ret;
+	t_param	*p;
 
 	p = (t_param *) params;
 	ret = 0;
-	if ((keycode > 122 && keycode < 127) || 
+	if ((keycode > 122 && keycode < 127) || \
 			(keycode >= 0 && keycode < 3) || keycode == 13)
 		ret = handle_cam(keycode, p);
 	if (keycode == KEY_TAB)
