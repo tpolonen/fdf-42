@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 13:51:55 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/05 14:13:53 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static int	check_bounds(double dx, double dy, double xtrend, double ytrend)
 			return (-1);
 		return (0);
 	}
-	else if (dx > SIZE_X)
+	else if (dx >= SIZE_X)
 	{
 		if (xtrend > 0)
 			return (-1);
@@ -58,7 +58,7 @@ static int	check_bounds(double dx, double dy, double xtrend, double ytrend)
 			return (-1);
 		return (0);
 	}
-	else if (dy > SIZE_Y)
+	else if (dy >= SIZE_Y)
 	{
 		if (ytrend > 0)
 			return (-1);

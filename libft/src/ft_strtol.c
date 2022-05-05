@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:19:38 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/07 10:15:23 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/05 14:54:42 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,15 @@
  * Current version sets the endptr to the char after the atoi'd number.
  * Different bases not implemented.
  * Needed in fdf map parsing.
+ * One difference to libc's strol: doesn't skip over newlines.
  */
+
+static int	iswspace(int c)
+{
+	if (c == '\t' || c == '\v' || c == '\f' || c == '\r' || c == ' ')
+		return (1);
+	return (0);
+}
 
 long	ft_strtol(const char *nptr, char **endptr)
 {
@@ -26,7 +34,7 @@ long	ft_strtol(const char *nptr, char **endptr)
 
 	n = 0;
 	sign = 1;
-	while (ft_isspace(*nptr))
+	while (iswspace(*nptr))
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
 	{

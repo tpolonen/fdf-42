@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 23:05:21 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/05 14:11:53 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,6 +64,7 @@ static void	init_params(t_param *params)
 	params->magnitude = DEFAULT_MAGNITUDE;
 	params->margin.x = SIZE_X / 2;
 	params->margin.y = 50;
+	params->cur_buf = 0;
 	load_projections(params->projs);
 }
 

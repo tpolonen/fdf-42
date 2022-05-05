@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 13:58:04 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/05 14:15:13 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static double	dist_to_middle(t_point2 *point)
 {
 	double dist = (sqrt(pow(fabs(point->x - (SIZE_X / 2)), 2.0) +\
 			pow(fabs(point->y - (SIZE_Y / 2)), 2.0)));
-	printf("dist to middle %f\n", dist);
 	return dist;
 }
 
@@ -54,10 +53,8 @@ static void	draw_line(t_param *p, t_point2 *p1, int x, int z)
 
 	get_point(p, &p2, x, z);
 	if ((p1->x > SIZE_X && p2.x > SIZE_X) || (p1->x < 0 && p2.x < 0) \
-			|| (p1->y > SIZE_Y) && (p2.y > SIZE_Y) || (p1->y < 0 && p2.y < 0))
+			|| (p1->y > SIZE_Y && p2.y > SIZE_Y) || (p1->y < 0 && p2.y < 0))
 		return ;
-	printf("drawing line between:\nx:%f, y:%f\nx:%f, y:%f\n",
-			p1->x, p1->y, p2.x, p2.y);
 	if (dist_to_middle(p1) < dist_to_middle(&p2))
 		dda_draw_line(p->bufs[p->cur_buf], p1, &p2, p->color);
 	else
