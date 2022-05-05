@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/04 12:20:12 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/05 13:51:55 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,35 @@ void	put_instructions(t_param *p)
 		"Esc: Exit");
 }
 
+static int	check_bounds(double dx, double dy, double xtrend, double ytrend)
+{
+	if (dx < 0)
+	{
+		if (xtrend < 0)
+			return (-1);
+		return (0);
+	}
+	else if (dx > SIZE_X)
+	{
+		if (xtrend > 0)
+			return (-1);
+		return (0);
+	}
+	if (dy < 0)
+	{
+		if (ytrend < 0)
+			return (-1);
+		return (0);
+	}
+	else if (dy > SIZE_Y)
+	{
+		if (ytrend > 0)
+			return (-1);
+		return (0);
+	}
+	return (1);
+}
+
 void	dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
 {
 	uint8_t	*dst;
@@ -53,12 +82,20 @@ void	dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
 	//draw pixel for each step
 	double x = p1->x;
 	double y = p1->y;
-	if (!(x >= SIZE_X || x < 0 || y >= SIZE_Y || y < 0)) *(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
+	if (!(x >= SIZE_X || x < 0 || y >= SIZE_Y || y < 0))
+		*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
 	for (int i = 1; i <= step; ++i)
 	{
+		int res;
 		x += x_increment;
 		y += y_increment;
-		if (x >= SIZE_X || x < 0 || y >= SIZE_Y || y < 0) continue;
+		res = check_bounds(x, y, x_increment, y_increment);
+		if (res <= 0)
+		{
+			if (res < 0)
+				break ;
+			continue ;
+		}
 		*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
 	}
 }

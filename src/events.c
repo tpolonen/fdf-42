@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 12:12:10 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/03 19:32:36 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/05 13:28:11 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,8 +68,9 @@ int	event_keydown(int keycode, void *params)
 
 	p = (t_param *) params;
 	ret = 0;
-	if ((keycode > 122 && keycode < 127) || \
-			(keycode >= 0 && keycode < 3) || keycode == 13)
+	if (keycode == KEY_UP || keycode == KEY_DOWN || keycode == KEY_LEFT || \
+			keycode == KEY_RIGHT || keycode == KEY_W || keycode == KEY_A || \
+			keycode == KEY_S || keycode == KEY_D)
 		ret = handle_cam(keycode, p);
 	if (keycode == KEY_TAB)
 	{
@@ -80,7 +81,6 @@ int	event_keydown(int keycode, void *params)
 	{
 		ret = 1;
 		p->hide_text = p->hide_text == 0;
-		printf("hide_text = %d\n", p->hide_text);
 	}
 	if (keycode == KEY_ESC)
 		handle_exit("Closing down...", p);
