@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 14:15:13 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 09:44:25 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,9 +42,8 @@ static void	get_point(t_param *params, t_point2 *buf_pos, int x, int z)
 
 static double	dist_to_middle(t_point2 *point)
 {
-	double dist = (sqrt(pow(fabs(point->x - (SIZE_X / 2)), 2.0) +\
+	return (sqrt(pow(fabs(point->x - (SIZE_X / 2)), 2.0) + \
 			pow(fabs(point->y - (SIZE_Y / 2)), 2.0)));
-	return dist;
 }
 
 static void	draw_line(t_param *p, t_point2 *p1, int x, int z)
