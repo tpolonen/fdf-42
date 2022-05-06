@@ -6,12 +6,33 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 09:32:43 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:53:04 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "dintarr.h"
+
+void	print_map(int **map, int *cols, int rows)
+{
+	int	x;
+	int	y;
+
+	y = 0;
+	while (y < rows)
+	{
+		x = 0;
+		while (x < cols[y])
+		{
+			ft_putnbr(map[y][x]);
+			if (x < cols[y] - 1)
+				ft_putstr(" ");
+			x++;
+		}
+		ft_putendl("");
+		y++;
+	}
+}
 
 static int	get_col(t_dintarr **darr, char **nptr, int cols)
 {
@@ -24,7 +45,7 @@ static int	get_col(t_dintarr **darr, char **nptr, int cols)
 	return (++cols);
 }
 
-static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
+static int	**read_cols(char *nptr, int **col_arr, int rows, t_param *params)
 {
 	t_dintarr	*darr;
 	int			i;
@@ -36,7 +57,7 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 	while (i < rows)
 	{
 		cols = 0;
-		while (*nptr != '\0' && *nptr != '\n')
+		while ((ft_isdigit(*nptr) || *nptr == '+' || *nptr == '-') && *nptr != '\0' && *nptr != '\n')
 		{
 			cols = get_col(&darr, &nptr, cols);
 			while (*nptr != '\n' && *nptr != '\0' && ft_isspace(*nptr))
@@ -44,8 +65,8 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 		}
 		dintarr_close(&darr, &(params->map[i]));
 		if (!cols)
-			return (free_map(&(params->map), &col_arr, rows));
-		col_arr[i++] = cols;
+			return (free_map(&(params->map), col_arr, rows));
+		(*col_arr)[i++] = cols;
 		nptr++;
 	}
 	return (params->map);
@@ -58,6 +79,13 @@ static int	read_rows(int fd, t_dstr **data)
 	char	*buf;
 
 	rows = 0;
+	len = ft_getline(fd, &buf);
+	if (len <= 0)
+	{
+		if (len == 0)
+			free(buf);
+		return (0);
+	}
 	while (1)
 	{
 		len = ft_getline(fd, &buf);
@@ -84,13 +112,20 @@ void	read_file(char *filename, t_param *params)
 	}
 	rows = 0;
 	data = NULL;
+	params->map = NULL;
+	params->cols = NULL;
 	rows = read_rows(fd, &data);
 	if (!rows)
+	{
+		ft_dstrclose(&data, NULL);
 		handle_exit("Map error: Empty file", params);
+	}
+	printf("rows: %d\n", rows);
 	params->cols = (int *)ft_memalloc(sizeof(int) * rows);
-	params->map = read_cols(data->str, params->cols, rows, params);
+	params->map = read_cols(data->str, &(params->cols), rows, params);
 	ft_dstrclose(&data, NULL);
 	if (!params->map)
 		handle_exit("Map error: Invalid characters", params);
+	print_map(params->map, params->cols, rows);
 	params->map_height = rows;
 }

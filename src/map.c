@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 09:44:25 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 16:38:26 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,9 @@ int	**free_map(int ***map, int **col_arr, int rows)
 {
 	int	i;
 
-	if (!*map)
+	if (!(*map))
+		return (NULL);
+	if (!(**map))
 		return (NULL);
 	i = 0;
 	while (i < rows)
