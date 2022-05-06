@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 16:37:04 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:38:07 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ void	render_frame(t_param *p)
 
 static void	init_params(t_param *params)
 {	
-	params->win = mlx_new_window(params->mlx, SIZE_X, SIZE_Y, "fdf");
+	params->map = NULL;
+	params->cols = NULL;
 	params->scale = DEFAULT_SCALE;
 	params->magnitude = DEFAULT_MAGNITUDE;
 	params->margin.x = SIZE_X / 2;
 	params->margin.y = 50;
 	params->cur_buf = 0;
-	load_projections(params->projs);
 }
 
 int	main(int ac, char **av)
@@ -74,13 +74,15 @@ int	main(int ac, char **av)
 	t_image		buff1;
 	t_image		buff2;
 
+	init_params(&params);
 	read_params(ac, av, &params);
 	params.mlx = mlx_init();
 	if (!params.mlx)
 		handle_exit("Couldn't initialize MLX-library.", NULL);
 	params.bufs[0] = init_buff(params.mlx, &buff1);
 	params.bufs[1] = init_buff(params.mlx, &buff2);
-	init_params(&params);
+	params->win = mlx_new_window(params->mlx, SIZE_X, SIZE_Y, "fdf");
+	load_projections(params->projs);
 	render_frame(&params);
 	mlx_hook(params.win, 2, 0, event_keydown, (void *)&params);
 	mlx_hook(params.win, 17, 0, event_destroy, (void *)&params);

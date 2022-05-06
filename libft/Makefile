@@ -6,7 +6,7 @@
 #    By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/12 19:01:12 by tpolonen          #+#    #+#              #
-#    Updated: 2022/05/06 16:22:11 by tpolonen         ###   ########.fr        #
+#    Updated: 2022/05/06 17:03:26 by teppo            ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,6 @@ _SRC += ft_memdel.c
 _SRC += ft_memmove.c
 _SRC += ft_memrchr.c
 _SRC += ft_memset.c
-_SRC += ft_memset.c.orig
 _SRC += ft_putchar.c
 _SRC += ft_putchar_fd.c
 _SRC += ft_putendl.c

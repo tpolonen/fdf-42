@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 16:53:04 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 17:37:56 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,8 @@ static int	**read_cols(char *nptr, int **col_arr, int rows, t_param *params)
 	while (i < rows)
 	{
 		cols = 0;
-		while ((ft_isdigit(*nptr) || *nptr == '+' || *nptr == '-') && *nptr != '\0' && *nptr != '\n')
+		while ((ft_isdigit(*nptr) || *nptr == '+' || *nptr == '-') \
+				&& *nptr != '\0' && *nptr != '\n')
 		{
 			cols = get_col(&darr, &nptr, cols);
 			while (*nptr != '\n' && *nptr != '\0' && ft_isspace(*nptr))
@@ -88,13 +89,13 @@ static int	read_rows(int fd, t_dstr **data)
 	}
 	while (1)
 	{
-		len = ft_getline(fd, &buf);
-		if (len <= 0)
-			return (rows);
 		ft_dstrbuild(data, buf, len);
 		ft_dstrbuild(data, "\n", 1);
 		rows++;
 		free(buf);
+		len = ft_getline(fd, &buf);
+		if (len <= 0)
+			return (rows);
 	}
 }
 
@@ -112,20 +113,16 @@ void	read_file(char *filename, t_param *params)
 	}
 	rows = 0;
 	data = NULL;
-	params->map = NULL;
-	params->cols = NULL;
 	rows = read_rows(fd, &data);
 	if (!rows)
 	{
 		ft_dstrclose(&data, NULL);
 		handle_exit("Map error: Empty file", params);
 	}
-	printf("rows: %d\n", rows);
 	params->cols = (int *)ft_memalloc(sizeof(int) * rows);
 	params->map = read_cols(data->str, &(params->cols), rows, params);
 	ft_dstrclose(&data, NULL);
 	if (!params->map)
 		handle_exit("Map error: Invalid characters", params);
-	print_map(params->map, params->cols, rows);
 	params->map_height = rows;
 }
