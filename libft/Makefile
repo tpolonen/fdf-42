@@ -6,7 +6,7 @@
 #    By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/11/12 19:01:12 by tpolonen          #+#    #+#              #
-#    Updated: 2022/05/06 19:36:33 by tpolonen         ###   ########.fr        #
+#    Updated: 2022/05/06 19:39:17 by tpolonen         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -100,7 +100,7 @@ OBJ := $(patsubst $(SRC_DIR)/%.c, $(OBJ_DIR)/%.o, $(SRC))
 
 CC 			:= gcc
 CPPFLAGS	:= -I$(HEADER_DIR)
-CFLAGS 		:= -g -c -Wall -Wextra -Werror
+CFLAGS 		:= -c -Wall -Wextra -Werror
 ARFLAGS 	:= rcs
 
 .PHONY: all clean fclean re
