@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 12:12:10 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 19:38:10 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 19:59:45 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,6 @@ void	handle_exit(char *msg, void *params)
 	ft_putendl(msg);
 	if (p)
 		free_map(&(p->map), &(p->cols), p->map_height);
-	system("leaks fdf");
 	exit(0);
 }
 

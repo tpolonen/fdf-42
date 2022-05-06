@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 17:53:10 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 20:04:31 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static void	read_params(int ac, char **av, t_param *params)
 static t_image	*init_buff(void *mlx, t_image *buff)
 {
 	buff->img = mlx_new_image(mlx, SIZE_X, SIZE_Y);
+	if (!buff->img)
+		return (NULL);
 	buff->addr = mlx_get_data_addr(buff->img, &buff->bits_per_pixel,
 			&buff->bytes_per_line, &buff->endian);
 	buff->bytes_per_pixel = buff->bits_per_pixel / 8;
@@ -78,9 +80,11 @@ int	main(int ac, char **av)
 	read_params(ac, av, &params);
 	params.mlx = mlx_init();
 	if (!params.mlx)
-		handle_exit("Couldn't initialize MLX-library.", NULL);
+		handle_exit("Couldn't initialize MLX-library.", &params);
 	params.bufs[0] = init_buff(params.mlx, &buff1);
 	params.bufs[1] = init_buff(params.mlx, &buff2);
+	if (!params.bufs[0] || !params.bufs[1])
+		handle_exit("Couldn't initialize image buffers.", &params);
 	params.win = mlx_new_window(params.mlx, SIZE_X, SIZE_Y, "fdf");
 	load_projections(params.projs);
 	render_frame(&params);
