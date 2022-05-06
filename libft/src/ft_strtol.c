@@ -6,11 +6,12 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:19:38 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 14:54:42 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/05 21:25:25 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
+#include <stdio.h>
 
 /*
  * To be implemented fully...
@@ -20,7 +21,7 @@
  * One difference to libc's strol: doesn't skip over newlines.
  */
 
-static int	iswspace(int c)
+static int	ft_iswspace(int c)
 {
 	if (c == '\t' || c == '\v' || c == '\f' || c == '\r' || c == ' ')
 		return (1);
@@ -30,11 +31,15 @@ static int	iswspace(int c)
 long	ft_strtol(const char *nptr, char **endptr)
 {
 	long	n;
+	int		isnum;
 	int		sign;
+	char	*start;
 
 	n = 0;
+	isnum = 0;
 	sign = 1;
-	while (iswspace(*nptr))
+	start = (char *) nptr;
+	while (ft_iswspace(*nptr))
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
 	{
@@ -43,9 +48,17 @@ long	ft_strtol(const char *nptr, char **endptr)
 		nptr++;
 	}
 	while (ft_isdigit(*nptr))
+	{
+		isnum = 1;
 		n = (10 * n) + ((long) sign * (*nptr++ - '0'));
+	}
 	if (endptr != NULL)
-		if (*endptr != NULL)
+	{
+		if (*endptr != NULL && isnum)
 			*endptr = (char *)nptr;
+		else
+			*endptr = start;
+	}
+	printf("returning %ld\n", n);
 	return (n);
 }

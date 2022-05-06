@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 14:56:55 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 09:01:38 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,12 @@ static int	isvalidchar(char c)
 
 static int	get_col(t_dintarr **darr, char **nptr, int cols)
 {
+	char	*start;
+
+	start = *nptr;
 	dintarr_add(darr, (int)ft_strtol(*nptr, nptr));
+	if (start == *nptr)
+		return (cols);
 	return (++cols);
 }
 
@@ -39,12 +44,8 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 		while (*nptr != '\n' && *nptr != '\0')
 		{
 			cols = get_col(&darr, &nptr, cols);
-			if (!isvalidchar(*nptr))
-				break ;
-		}
-		printf("cols=%d, nptr after cols loop: %c (%d)\n", cols, *nptr, *nptr);
-		dintarr_close(&darr, &(params->map[i]));
-		if (*nptr != '\n' || *nptr != '\0')
+			if (!isvalidchar(*nptr) || !cols
+		if ((*nptr != '\n' && *nptr != '\0') || !cols)
 			return (free_map(&(params->map), &col_arr, rows));
 		col_arr[i++] = cols;
 		nptr++;
