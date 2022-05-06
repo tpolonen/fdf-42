@@ -6,17 +6,12 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 09:01:38 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 09:32:43 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fdf.h"
 #include "dintarr.h"
-
-static int	isvalidchar(char c)
-{
-	return (ft_isdigit(c) || ft_isspace(c) || c == '+' || c == '-');
-}
 
 static int	get_col(t_dintarr **darr, char **nptr, int cols)
 {
@@ -41,11 +36,14 @@ static int	**read_cols(char *nptr, int *col_arr, int rows, t_param *params)
 	while (i < rows)
 	{
 		cols = 0;
-		while (*nptr != '\n' && *nptr != '\0')
+		while (*nptr != '\0' && *nptr != '\n')
 		{
 			cols = get_col(&darr, &nptr, cols);
-			if (!isvalidchar(*nptr) || !cols
-		if ((*nptr != '\n' && *nptr != '\0') || !cols)
+			while (*nptr != '\n' && *nptr != '\0' && ft_isspace(*nptr))
+				nptr++;
+		}
+		dintarr_close(&darr, &(params->map[i]));
+		if (!cols)
 			return (free_map(&(params->map), &col_arr, rows));
 		col_arr[i++] = cols;
 		nptr++;

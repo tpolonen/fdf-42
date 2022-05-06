@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:19:38 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 21:25:25 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 09:34:18 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,31 +15,23 @@
 
 /*
  * To be implemented fully...
- * Current version sets the endptr to the char after the atoi'd number.
- * Different bases not implemented.
+ * endptr, if not NULL, is set to first invalid character after atoi'd long..
+ * Different bases not yet implemented.
  * Needed in fdf map parsing.
- * One difference to libc's strol: doesn't skip over newlines.
  */
-
-static int	ft_iswspace(int c)
-{
-	if (c == '\t' || c == '\v' || c == '\f' || c == '\r' || c == ' ')
-		return (1);
-	return (0);
-}
 
 long	ft_strtol(const char *nptr, char **endptr)
 {
 	long	n;
-	int		isnum;
-	int		sign;
+	char	isnum;
+	char	sign;
 	char	*start;
 
 	n = 0;
 	isnum = 0;
 	sign = 1;
 	start = (char *) nptr;
-	while (ft_iswspace(*nptr))
+	while (ft_isspace(*nptr))
 		nptr++;
 	if (*nptr == '-' || *nptr == '+')
 	{
@@ -56,9 +48,8 @@ long	ft_strtol(const char *nptr, char **endptr)
 	{
 		if (*endptr != NULL && isnum)
 			*endptr = (char *)nptr;
-		else
+		else if (*endptr != NULL)
 			*endptr = start;
 	}
-	printf("returning %ld\n", n);
 	return (n);
 }
