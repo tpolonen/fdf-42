@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/14 17:03:46 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 16:38:26 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 19:00:35 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,9 +57,9 @@ static void	draw_line(t_param *p, t_point2 *p1, int x, int z)
 			|| (p1->y > SIZE_Y && p2.y > SIZE_Y) || (p1->y < 0 && p2.y < 0))
 		return ;
 	if (dist_to_middle(p1) < dist_to_middle(&p2))
-		dda_draw_line(p->bufs[p->cur_buf], p1, &p2, p->color);
+		dda_draw_line(p, p1, &p2);
 	else
-		dda_draw_line(p->bufs[p->cur_buf], &p2, p1, p->color);
+		dda_draw_line(p, &p2, p1);
 }
 
 void	render_map(t_param *params)

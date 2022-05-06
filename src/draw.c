@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 14:13:53 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 19:15:47 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,35 +67,49 @@ static int	check_bounds(double dx, double dy, double xtrend, double ytrend)
 	return (1);
 }
 
-void	dda_draw_line(t_image *img, t_point2 *p1, t_point2 *p2, uint32_t color)
+static void	dda_put_pixels(t_param *p, t_point2 *draw, t_point2 *inc, int step)
 {
-	uint8_t	*dst;
+	int		res;
 
-	dst = (uint8_t *)img->addr;
-	int dx = (int)p2->x - (int)p1->x;
-	int dy = (int)p2->y - (int)p1->y;
-	//calculate steps required for creating pixels
-	int step = abs(abs(dx) > abs(dy) ? dx : dy);
-	//calculate increment in x & y for each step
-	double x_increment = (dx) / (double)step;
-	double y_increment = (dy) / (double)step;
-	//draw pixel for each step
-	double x = p1->x;
-	double y = p1->y;
-	if (!(x >= SIZE_X || x < 0 || y >= SIZE_Y || y < 0))
-		*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
-	for (int i = 1; i <= step; ++i)
+	while (step > 0)
 	{
-		int res;
-		x += x_increment;
-		y += y_increment;
-		res = check_bounds(x, y, x_increment, y_increment);
+		res = check_bounds(draw->x, draw->y, inc->x, inc->y);
 		if (res <= 0)
 		{
 			if (res < 0)
 				break ;
+			draw->x += inc->x;
+			draw->y += inc->y;
 			continue ;
 		}
-		*(uint32_t *)(dst + ((int)y * img->bytes_per_line) + ((int)x * img->bytes_per_pixel)) = color;
+		*(uint32_t *)(p->bufs[p->cur_buf]->addr + \
+				((int)draw->y * \
+				p->bufs[p->cur_buf]->bytes_per_line) + \
+				((int)draw->x * \
+				p->bufs[p->cur_buf]->bytes_per_pixel)) \
+				= p->color;
+		draw->x += inc->x;
+		draw->y += inc->y;
+		step--;
 	}
+}
+
+void	dda_draw_line(t_param *params, t_point2 *p1, t_point2 *p2)
+{
+	int			step;
+	t_point2	dist;
+	t_point2	increments;
+	t_point2	draw;
+
+	dist.x = p2->x - p1->x;
+	dist.y = p2->y - p1->y;
+	if (abs(dist.x) > abs(dist.y))
+		step = abs(dist.x);
+	else
+		step = abs(dist.y);
+	increments.x = (dist.x) / (double)step;
+	increments.y = (dist.y) / (double)step;
+	draw.x = p1->x;
+	draw.y = p1->y;
+	dda_put_pixels(params, &draw, &increments, step);
 }

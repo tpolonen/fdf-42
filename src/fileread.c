@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 17:37:56 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 18:24:37 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,6 @@ void	read_file(char *filename, t_param *params)
 	params->map = read_cols(data->str, &(params->cols), rows, params);
 	ft_dstrclose(&data, NULL);
 	if (!params->map)
-		handle_exit("Map error: Invalid characters", params);
+		handle_exit("Map error: Invalid row", params);
 	params->map_height = rows;
 }

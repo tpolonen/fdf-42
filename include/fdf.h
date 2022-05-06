@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:43:12 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/04 16:43:16 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 19:00:35 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ typedef struct s_param
 
 /* Drawing related */
 // draw.c
-void		dda_draw_line(t_image *i, t_point2 *p1, t_point2 *p2, uint32_t c);
+void		dda_draw_line(t_param *params, t_point2 *p1, t_point2 *p2);
 uint32_t	rgb_to_uint(unsigned char r, unsigned char g, unsigned char b);
 void		put_instructions(t_param *params);
 

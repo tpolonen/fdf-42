@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 17:38:07 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 17:53:10 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,8 @@ int	main(int ac, char **av)
 		handle_exit("Couldn't initialize MLX-library.", NULL);
 	params.bufs[0] = init_buff(params.mlx, &buff1);
 	params.bufs[1] = init_buff(params.mlx, &buff2);
-	params->win = mlx_new_window(params->mlx, SIZE_X, SIZE_Y, "fdf");
-	load_projections(params->projs);
+	params.win = mlx_new_window(params.mlx, SIZE_X, SIZE_Y, "fdf");
+	load_projections(params.projs);
 	render_frame(&params);
 	mlx_hook(params.win, 2, 0, event_keydown, (void *)&params);
 	mlx_hook(params.win, 17, 0, event_destroy, (void *)&params);
