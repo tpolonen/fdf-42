@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 11:19:38 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 09:40:23 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/06 13:29:08 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,12 +43,10 @@ static long	getlong(char sign, char *nptr, char *start, char **endptr)
 long	ft_strtol(const char *nptr, char **endptr)
 {
 	long	n;
-	char	isnum;
 	char	sign;
 	char	*start;
 
 	n = 0;
-	isnum = 0;
 	sign = 1;
 	start = (char *) nptr;
 	while (ft_isspace(*nptr))
