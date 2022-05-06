@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 11:46:03 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 19:15:47 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 19:37:33 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,10 +103,10 @@ void	dda_draw_line(t_param *params, t_point2 *p1, t_point2 *p2)
 
 	dist.x = p2->x - p1->x;
 	dist.y = p2->y - p1->y;
-	if (abs(dist.x) > abs(dist.y))
-		step = abs(dist.x);
+	if (fabs(dist.x) > fabs(dist.y))
+		step = (int)fabs(dist.x);
 	else
-		step = abs(dist.y);
+		step = (int)fabs(dist.y);
 	increments.x = (dist.x) / (double)step;
 	increments.y = (dist.y) / (double)step;
 	draw.x = p1->x;

@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/21 12:12:10 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/05 13:28:11 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/06 19:38:10 by tpolonen         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ static int	handle_cam(int keycode, t_param *params)
 
 void	handle_exit(char *msg, void *params)
 {
-	int			rows;
 	t_param		*p;
 
 	p = (t_param *) params;
