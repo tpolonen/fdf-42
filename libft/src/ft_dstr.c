@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/06 10:57:51 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/04/06 14:34:17 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/09 10:51:49 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ ssize_t	ft_dstrclose(t_dstr **ds, char **target)
 	ret = 0;
 	if (*ds == NULL)
 		return (ret);
-	if (target != NULL)
+	if (target != NULL && (*ds)->len > 0)
 	{
 		ret = (*ds)->len;
 		if ((*ds)->alloced == (*ds)->len + 1)

@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/19 16:03:05 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 20:04:31 by tpolonen         ###   ########.fr       */
+/*   Updated: 2022/05/09 11:00:36 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,11 @@ static t_image	*init_buff(void *mlx, t_image *buff)
 void	render_frame(t_param *p)
 {
 	t_image		*buff;
-	int			ret;
 
 	buff = p->bufs[p->cur_buf];
 	ft_bzero(buff->addr, buff->bytes_per_line * SIZE_Y);
 	render_map(p);
-	ret = mlx_put_image_to_window(p->mlx, p->win, buff->img, 0, 0);
+	mlx_put_image_to_window(p->mlx, p->win, buff->img, 0, 0);
 	p->cur_buf = (p->cur_buf == 0);
 	if (!p->hide_text)
 		put_instructions(p);
@@ -61,13 +60,15 @@ void	render_frame(t_param *p)
 
 static void	init_params(t_param *params)
 {	
+	params->cur_buf = 0;
 	params->map = NULL;
 	params->cols = NULL;
 	params->scale = DEFAULT_SCALE;
 	params->magnitude = DEFAULT_MAGNITUDE;
 	params->margin.x = SIZE_X / 2;
 	params->margin.y = 50;
-	params->cur_buf = 0;
+	params->cur_proj = 0;
+	params->hide_text = 0;
 }
 
 int	main(int ac, char **av)

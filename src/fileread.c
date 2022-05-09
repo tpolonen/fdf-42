@@ -6,7 +6,7 @@
 /*   By: tpolonen <tpolonen@student.hive.fi>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/05 12:02:54 by tpolonen          #+#    #+#             */
-/*   Updated: 2022/05/06 18:24:37 by teppo            ###   ########.fr       */
+/*   Updated: 2022/05/09 10:53:11 by teppo            ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,11 +82,7 @@ static int	read_rows(int fd, t_dstr **data)
 	rows = 0;
 	len = ft_getline(fd, &buf);
 	if (len <= 0)
-	{
-		if (len == 0)
-			free(buf);
 		return (0);
-	}
 	while (1)
 	{
 		ft_dstrbuild(data, buf, len);
